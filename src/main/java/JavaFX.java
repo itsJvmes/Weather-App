@@ -1,17 +1,25 @@
 import javafx.application.Application;
 
 import javafx.scene.Scene;
-
+import javafx.scene.layout.BorderPane;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextArea;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import weather.Period;
 import weather.WeatherAPI;
 
+
+import java.awt.*;
 import java.util.ArrayList;
 
 public class JavaFX extends Application {
-	TextField temperature,weather;
+	TextField Location;
+	TextArea temperature,description, Clock, detailOnDay, tempPerHour, Wind, UV, AQI_index, Prediction;
+	HBox hHome1,hHome2,hHome3;
+	VBox vHome1,vHome2, vHomeFinal;
+	Scene Home;
 
 	public static void main(String[] args) {
 		launch(args);
@@ -26,16 +34,70 @@ public class JavaFX extends Application {
 		if (forecast == null){
 			throw new RuntimeException("Forecast did not load");
 		}
-		temperature = new TextField();
-		weather = new TextField();
-		temperature.setText("Today's weather is: "+String.valueOf(forecast.get(0).temperature));
-		weather.setText(forecast.get(0).shortForecast);
-		
-		
-		
-				
-		Scene scene = new Scene(new VBox(temperature,weather), 960,540);
-		primaryStage.setScene(scene);
+		Location = new TextField("Location");
+		Location.setPrefSize(160,40);
+		Location.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
+
+		temperature= new TextArea("Temperature");
+		temperature.setPrefSize(160,120);
+		temperature.setEditable(false);
+		//temperature.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
+		temperature.setStyle("-fx-background-color: transparent; -fx-control-inner-background: transparent; -fx-border-color: transparent; -fx-text-fill: black;");
+
+		description = new TextArea("Description");
+		description.setPrefSize(763,160);
+		description.setEditable(false);
+		description.setStyle("-fx-background-color: transparent; -fx-control-inner-background: transparent; -fx-border-color: transparent; -fx-text-fill: black;");
+
+		Clock = new TextArea("Time Clock");
+		Clock.setPrefSize(160,160);
+		Clock.setEditable(false);
+		Clock.setStyle("-fx-background-color: transparent; -fx-control-inner-background: transparent; -fx-border-color: transparent; -fx-text-fill: black;");
+
+		detailOnDay = new TextArea("More detail about weather during day");
+		detailOnDay.setPrefSize(764,35);
+		detailOnDay.setEditable(false);
+		detailOnDay.setStyle("-fx-background-color: transparent; -fx-control-inner-background: transparent; -fx-border-color: transparent; -fx-text-fill: black;");
+
+		tempPerHour =new TextArea("Display the temperature per hour");
+		tempPerHour.setPrefSize(763,117);
+		tempPerHour.setEditable(false);
+		tempPerHour.setStyle("-fx-background-color: transparent; -fx-control-inner-background: transparent; -fx-border-color: transparent; -fx-text-fill: black;");
+
+		Wind = new TextArea("Wind\nHi");
+		Wind.setPrefSize(160,160);
+		Wind.setEditable(false);
+		Wind.setStyle("-fx-background-color: transparent; -fx-control-inner-background: transparent; -fx-border-color: transparent; -fx-text-fill: black;");
+
+		UV =new TextArea("UV");
+		UV.setPrefSize(160,160);
+		UV.setEditable(false);
+		UV.setStyle("-fx-background-color: transparent; -fx-control-inner-background: transparent; -fx-border-color: transparent; -fx-text-fill: black;");
+
+		AQI_index=new TextArea("AQI_index");
+		AQI_index.setPrefSize(160,160);
+		AQI_index.setEditable(false);
+		AQI_index.setStyle("-fx-background-color: transparent; -fx-control-inner-background: transparent; -fx-border-color: transparent; -fx-text-fill: black;");
+
+		Prediction=new TextArea("Predict weather of next 4 days");
+		Prediction.setPrefSize(160,160);
+		Prediction.setEditable(false);
+		Prediction.setStyle("-fx-background-color: transparent; -fx-control-inner-background: transparent; -fx-border-color: transparent; -fx-text-fill: black;");
+
+
+		vHome1 = new VBox(2,Location,temperature);
+		hHome1 =new HBox(20, vHome1,description);
+		vHome2 = new VBox(3, detailOnDay,tempPerHour);
+		hHome2 = new HBox(20,Clock,vHome2);
+		hHome3 = new HBox(100,Wind,UV,AQI_index,Prediction);
+		vHomeFinal = new VBox(3,hHome1,hHome2,hHome3);
+		//Home =new Scene(vHomeFinal,960,540);
+		BorderPane p=new BorderPane();
+		p.setCenter(vHomeFinal);
+		p.setStyle("-fx-background-color: gray;");
+		Home  = new Scene(p,960,540);
+
+		primaryStage.setScene(Home);
 		primaryStage.show();
 	}
 
