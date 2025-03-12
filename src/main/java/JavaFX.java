@@ -100,5 +100,4 @@ public class JavaFX extends Application {
 		primaryStage.setScene(Home);
 		primaryStage.show();
 	}
-
 }
