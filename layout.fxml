@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Scene?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.stage.Stage?>
+
+<Stage xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <scene>
+        <Scene>
+            <AnchorPane prefHeight="540.0" prefWidth="960.0">
+            <children>
+               <TextField layoutX="16.0" layoutY="17.0" prefHeight="160.0" prefWidth="160.0" />
+               <TextField layoutX="16.0" layoutY="189.0" prefHeight="160.0" prefWidth="160.0" />
+               <TextField layoutX="16.0" layoutY="362.0" prefHeight="160.0" prefWidth="160.0" />
+               <TextField layoutX="269.0" layoutY="362.0" prefHeight="160.0" prefWidth="160.0" />
+               <TextField layoutX="541.0" layoutY="362.0" prefHeight="160.0" prefWidth="160.0" />
+               <TextField layoutX="786.0" layoutY="362.0" prefHeight="160.0" prefWidth="160.0" />
+               <TextField layoutX="187.0" layoutY="17.0" prefHeight="160.0" prefWidth="763.0" />
+               <TextField layoutX="187.0" layoutY="189.0" prefHeight="35.0" prefWidth="764.0" />
+               <TextField layoutX="187.0" layoutY="235.0" prefHeight="113.0" prefWidth="763.0" />
+            </children></AnchorPane>
+        </Scene>
+    </scene>
+</Stage>
