@@ -30,10 +30,7 @@ public class JavaFX extends Application {
 		weather = new TextField();
 		temperature.setText("Today's weather is: "+String.valueOf(forecast.get(0).temperature));
 		weather.setText(forecast.get(0).shortForecast);
-		
-		
-		
-				
+
 		Scene scene = new Scene(new VBox(temperature,weather), 960,540);
 		primaryStage.setScene(scene);
 		primaryStage.show();
