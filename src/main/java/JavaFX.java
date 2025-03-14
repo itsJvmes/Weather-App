@@ -129,11 +129,11 @@ public class JavaFX extends Application {
 		Weather4.setEditable(false);
 		Weather4.setPrefSize(145,400);
 
-		Image homeButtonIcon = new Image("https://www.flaticon.com/free-icon/home-icon-silhouette_69524?term=home&page=1&position=9&origin=tag&related_id=69524");
+		Image homeButtonIcon = new Image("https://img.icons8.com/?size=100&id=86527&format=png&color=000000");
 		ImageView homeIconView = new ImageView(homeButtonIcon);
 		homeIconView.setFitHeight(48);
 		homeIconView.setFitWidth(48);
-		homeButton = new Button("Home");
+		homeButton = new Button("");
 		homeButton.setGraphic(homeIconView);
 		homeButton.setOnAction(e -> {
 			primaryStage.setScene(Home);
