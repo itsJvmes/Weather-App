@@ -1,6 +1,10 @@
 import javafx.application.Application;
 
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
+import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
@@ -108,8 +112,38 @@ public class JavaFX extends Application {
 		p.setStyle("-fx-background-color: gray;");
 		Home  = new Scene(p,960,540);
 
+		// Weather in next 4 days page
+		Weather1=new TextArea("Weather 1");
+		Weather1.setEditable(false);
+		Weather1.setPrefSize(145,400);
 
+		Weather2=new TextArea("Weather 2");
+		Weather2.setEditable(false);
+		Weather2.setPrefSize(145,400);
 
+		Weather3=new TextArea("Weather 3");
+		Weather3.setEditable(false);
+		Weather3.setPrefSize(145,400);
+
+		Weather4=new TextArea("Weather 4");
+		Weather4.setEditable(false);
+		Weather4.setPrefSize(145,400);
+
+		Image homeButtonIcon = new Image("https://www.flaticon.com/free-icon/home-icon-silhouette_69524?term=home&page=1&position=9&origin=tag&related_id=69524");
+		ImageView homeIconView = new ImageView(homeButtonIcon);
+		homeIconView.setFitHeight(48);
+		homeIconView.setFitWidth(48);
+		homeButton = new Button("Home");
+		homeButton.setGraphic(homeIconView);
+		homeButton.setOnAction(e -> {
+			primaryStage.setScene(Home);
+		});
+		Prediction.setOnMouseClicked(e->{primaryStage.setScene(Weather4DPage);});
+		hWeather = new HBox(2,homeButton,Weather1,Weather2,Weather3,Weather4);
+		BorderPane p1=new BorderPane();
+		p1.setCenter(hWeather);
+		p1.setStyle("-fx-background-color: gray;");
+		Weather4DPage=new Scene(p1,960,540);
 		primaryStage.setScene(Home);
 		primaryStage.show();
 	}
