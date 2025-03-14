@@ -15,11 +15,17 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class JavaFX extends Application {
+	// Home Page
 	TextField Location;
 	TextArea temperature,description, Clock, detailOnDay, tempPerHour, Wind, UV, AQI_index, Prediction;
 	HBox hHome1,hHome2,hHome3;
 	VBox vHome1,vHome2, vHomeFinal;
 	Scene Home;
+	// Weather in next 4 days page
+	Button homeButton;
+	TextArea Weather1, Weather2, Weather3, Weather4;
+	HBox hWeather;
+	Scene Weather4DPage;
 
 	public static void main(String[] args) {
 		launch(args);
@@ -38,16 +44,21 @@ public class JavaFX extends Application {
 		Location.setPrefSize(160,40);
 		Location.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
 
+
 		temperature= new TextArea("Temperature");
 		temperature.setPrefSize(160,120);
 		temperature.setEditable(false);
 		//temperature.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
 		temperature.setStyle("-fx-background-color: transparent; -fx-control-inner-background: transparent; -fx-border-color: transparent; -fx-text-fill: black;");
+		temperature.setText("Today's weather is: "+String.valueOf(forecast.get(0).temperature) + forecast.get(0).temperatureUnit );
+
+
 
 		description = new TextArea("Description");
 		description.setPrefSize(763,160);
 		description.setEditable(false);
 		description.setStyle("-fx-background-color: transparent; -fx-control-inner-background: transparent; -fx-border-color: transparent; -fx-text-fill: black;");
+		description.setText(forecast.get(0).detailedForecast);
 
 		Clock = new TextArea("Time Clock");
 		Clock.setPrefSize(160,160);
@@ -96,6 +107,8 @@ public class JavaFX extends Application {
 		p.setCenter(vHomeFinal);
 		p.setStyle("-fx-background-color: gray;");
 		Home  = new Scene(p,960,540);
+
+
 
 		primaryStage.setScene(Home);
 		primaryStage.show();
