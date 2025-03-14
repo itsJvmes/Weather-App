@@ -1,6 +1,8 @@
 import javafx.application.Application;
 
+import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
@@ -11,7 +13,9 @@ import weather.Period;
 import weather.WeatherAPI;
 
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.io.File;
 import java.util.ArrayList;
 
 public class JavaFX extends Application {
@@ -34,15 +38,16 @@ public class JavaFX extends Application {
 		if (forecast == null){
 			throw new RuntimeException("Forecast did not load");
 		}
+
 		Location = new TextField("Location");
 		Location.setPrefSize(160,40);
 		Location.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
 
-		temperature= new TextArea("Temperature");
+		temperature= new TextArea();
+		temperature.setText(String.valueOf(forecast.getFirst().temperature) + "°");
 		temperature.setPrefSize(160,120);
 		temperature.setEditable(false);
-		//temperature.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
-		temperature.setStyle("-fx-background-color: transparent; -fx-control-inner-background: transparent; -fx-border-color: transparent; -fx-text-fill: black;");
+		temperature.setStyle("-fx-font-size: 50; -fx-background-color: transparent; -fx-control-inner-background: transparent; -fx-border-color: transparent; -fx-text-fill: black;");
 
 		description = new TextArea("Description");
 		description.setPrefSize(763,160);
@@ -91,10 +96,8 @@ public class JavaFX extends Application {
 		hHome2 = new HBox(20,Clock,vHome2);
 		hHome3 = new HBox(100,Wind,UV,AQI_index,Prediction);
 		vHomeFinal = new VBox(3,hHome1,hHome2,hHome3);
-		//Home =new Scene(vHomeFinal,960,540);
 		BorderPane p=new BorderPane();
 		p.setCenter(vHomeFinal);
-		p.setStyle("-fx-background-color: gray;");
 		Home  = new Scene(p,960,540);
 
 		primaryStage.setScene(Home);
