@@ -1,5 +1,6 @@
 import javafx.application.Application;
 
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -15,12 +16,13 @@ import weather.Period;
 import weather.WeatherAPI;
 
 
+import java.io.FileInputStream;
 import java.util.ArrayList;
 
 public class JavaFX extends Application {
 	// Home Page
 	TextField location;
-	TextArea temperature,description, clock, detailOnDay, tempPerHour, wind, UV, aqiIndex, prediction;
+	TextArea temperature,description, clock, shortDescription, tempPerHour, wind, UV, aqiIndex, prediction;
 	HBox hHome1,hHome2,hHome3;
 	VBox vHome1,vHome2, vHomeFinal;
 	Scene Home;
@@ -43,8 +45,21 @@ public class JavaFX extends Application {
 		if (forecast == null){
 			throw new RuntimeException("Forecast did not load");
 		}
-		location = new TextField("Chicago, IL");
+
+		FileInputStream inputstream = new FileInputStream("Background/Landscape/Individual wallpapers/Stardew desktop - day.jpg");
+		Image image = new Image(inputstream);
+
+		ImageView imageView = new ImageView(image);
+
+		imageView.setX(0);
+		imageView.setY(0);
+
+		imageView.setFitHeight(540);
+		imageView.setFitWidth(960);
+
+		location = new TextField("Chicago, ILsdfgsdfgsdfgdfsgsdfgsdfgsdfgsdfgsdfgdsfgdfsgdsfgsdfgdsfgdsfgsdfgdfg");
 		location.setPrefSize(160,40);
+		location.setEditable(false);
 		location.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
 
 
@@ -60,9 +75,9 @@ public class JavaFX extends Application {
 		description = new TextArea("Description");
 		description.setPrefSize(763,160);
 		description.setEditable(false);
-		description.setStyle("-fx-background-color: transparent; -fx-control-inner-background: transparent; -fx-border-color: transparent; -fx-text-fill: black;");
+		description.setStyle("-fx-font-size: 20; -fx-background-color: transparent; -fx-control-inner-background: transparent; -fx-border-color: transparent; -fx-text-fill: black;");
 		description.setWrapText(true);
-		description.setText(forecast.get(0).detailedForecast);
+		description.setText(forecast.getFirst().detailedForecast);
 
 
 		clock = new TextArea("Time Clock");
@@ -71,11 +86,11 @@ public class JavaFX extends Application {
 		clock.setStyle("-fx-background-color: transparent; -fx-control-inner-background: transparent; -fx-border-color: transparent; -fx-text-fill: black;");
 		clock.setWrapText(true);
 
-		detailOnDay = new TextArea("More detail about weather during day");
-		detailOnDay.setPrefSize(764,35);
-		detailOnDay.setEditable(false);
-		detailOnDay.setStyle("-fx-background-color: transparent; -fx-control-inner-background: transparent; -fx-border-color: transparent; -fx-text-fill: black;");
-		detailOnDay.setText(forecast.get(0).shortForecast);
+		shortDescription = new TextArea();
+		shortDescription.setPrefSize(764,35);
+		shortDescription.setEditable(false);
+		shortDescription.setStyle("-fx-font-size: 20; -fx-background-color: transparent; -fx-control-inner-background: transparent; -fx-border-color: transparent; -fx-text-fill: black;");
+		shortDescription.setText(forecast.getFirst().shortForecast);
 
 		tempPerHour =new TextArea("Display the temperature per hour");
 		tempPerHour.setPrefSize(763,117);
@@ -103,20 +118,23 @@ public class JavaFX extends Application {
 		prediction =new TextArea("Predict weather of next 4 days");
 		prediction.setPrefSize(160,160);
 		prediction.setEditable(false);
+		prediction.setWrapText(true);
 		prediction.setStyle("-fx-background-color: transparent; -fx-control-inner-background: transparent; -fx-border-color: transparent; -fx-text-fill: black;");
 
 
+
 		vHome1 = new VBox(2, location,temperature);
-		vHome2 = new VBox(3, detailOnDay,tempPerHour);
+		vHome2 = new VBox(3, shortDescription,tempPerHour);
 		hHome1 =new HBox(20, vHome1,vHome2);
 		hHome2 = new HBox(20, clock,description);
 		hHome3 = new HBox(100, wind,UV, aqiIndex, prediction);
 		vHomeFinal = new VBox(3,hHome1,hHome2,hHome3);
 		//Home =new Scene(vHomeFinal,960,540);
 		BorderPane p=new BorderPane();
-		p.setCenter(vHomeFinal);
-		p.setStyle("-fx-background-color: gray;");
-		Home  = new Scene(p,960,540);
+		Group root = new Group(imageView,vHomeFinal);
+//		p.setCenter(vHomeFinal);
+//		p.setStyle("-fx-background-color: gray;");
+		Home  = new Scene(root,960,540);
 
 		// Weather in next 4 days page
 		weather1 =new TextArea("Weather 1");
