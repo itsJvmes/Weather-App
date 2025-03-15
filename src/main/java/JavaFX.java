@@ -10,6 +10,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import weather.Period;
+import weather.Root;
 import weather.WeatherAPI;
 
 
@@ -19,7 +20,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class JavaFX extends Application {
-	TextField Location;
+	TextField location;
 	TextArea temperature,description, Clock, detailOnDay, tempPerHour, Wind, UV, AQI_index, Prediction;
 	HBox hHome1,hHome2,hHome3;
 	VBox vHome1,vHome2, vHomeFinal;
@@ -33,28 +34,32 @@ public class JavaFX extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		primaryStage.setTitle("Weather App");
-//		int temp = WeatherAPI.getTodaysTemperature(77,70);
+//		int temp = WeatherAPI.getTodayTemperature(77,70);
 		ArrayList<Period> forecast = WeatherAPI.getForecast("LOT",77,70);
 		if (forecast == null){
 			throw new RuntimeException("Forecast did not load");
 		}
 
-		Location = new TextField("Location");
-		Location.setPrefSize(160,40);
-		Location.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
+		location = new TextField();
+		location.setText("Chicago, IL");
+		location.setEditable(false);
+		location.setPrefSize(160,40);
+		location.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
 
 		temperature= new TextArea();
-		temperature.setText(String.valueOf(forecast.getFirst().temperature) + "°");
+		temperature.setText(String.valueOf(forecast.getFirst().temperature) + "°" + forecast.getFirst().temperatureUnit);
 		temperature.setPrefSize(160,120);
+		temperature.setWrapText(true);
 		temperature.setEditable(false);
-		temperature.setStyle("-fx-font-size: 50; -fx-background-color: transparent; -fx-control-inner-background: transparent; -fx-border-color: transparent; -fx-text-fill: black;");
+		temperature.setStyle("-fx-font-size: 40; -fx-background-color: transparent; -fx-control-inner-background: transparent; -fx-border-color: transparent; -fx-text-fill: black;");
 
 		description = new TextArea("Description");
 		description.setPrefSize(763,160);
 		description.setEditable(false);
 		description.setStyle("-fx-background-color: transparent; -fx-control-inner-background: transparent; -fx-border-color: transparent; -fx-text-fill: black;");
 
-		Clock = new TextArea("Time Clock");
+		Clock = new TextArea();
+		Clock.setText("Clock: \n" + forecast.getFirst().temperature);
 		Clock.setPrefSize(160,160);
 		Clock.setEditable(false);
 		Clock.setStyle("-fx-background-color: transparent; -fx-control-inner-background: transparent; -fx-border-color: transparent; -fx-text-fill: black;");
@@ -69,12 +74,14 @@ public class JavaFX extends Application {
 		tempPerHour.setEditable(false);
 		tempPerHour.setStyle("-fx-background-color: transparent; -fx-control-inner-background: transparent; -fx-border-color: transparent; -fx-text-fill: black;");
 
-		Wind = new TextArea("Wind\nHi");
+		Wind = new TextArea();
+		Wind.setText("Wind Speed:\n" + forecast.getFirst().windSpeed);
 		Wind.setPrefSize(160,160);
 		Wind.setEditable(false);
-		Wind.setStyle("-fx-background-color: transparent; -fx-control-inner-background: transparent; -fx-border-color: transparent; -fx-text-fill: black;");
+		Wind.setWrapText(true);
+		Wind.setStyle("-fx-font-size: 20; -fx-background-color: transparent; -fx-control-inner-background: transparent; -fx-border-color: transparent; -fx-text-fill: black;");
 
-		UV =new TextArea("UV");
+		UV = new TextArea("UV");
 		UV.setPrefSize(160,160);
 		UV.setEditable(false);
 		UV.setStyle("-fx-background-color: transparent; -fx-control-inner-background: transparent; -fx-border-color: transparent; -fx-text-fill: black;");
@@ -90,7 +97,7 @@ public class JavaFX extends Application {
 		Prediction.setStyle("-fx-background-color: transparent; -fx-control-inner-background: transparent; -fx-border-color: transparent; -fx-text-fill: black;");
 
 
-		vHome1 = new VBox(2,Location,temperature);
+		vHome1 = new VBox(2,location,temperature);
 		hHome1 =new HBox(20, vHome1,description);
 		vHome2 = new VBox(3, detailOnDay,tempPerHour);
 		hHome2 = new HBox(20,Clock,vHome2);
