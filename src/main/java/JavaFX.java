@@ -43,17 +43,17 @@ public class JavaFX extends Application {
 		if (forecast == null){
 			throw new RuntimeException("Forecast did not load");
 		}
-		location = new TextField("Location");
+		location = new TextField("Chicago, IL");
 		location.setPrefSize(160,40);
 		location.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
 
 
-		temperature= new TextArea("Temperature");
+		temperature= new TextArea();
+		temperature.setText(String.valueOf(forecast.getFirst().temperature) + "°" + forecast.getFirst().temperatureUnit);
 		temperature.setPrefSize(160,120);
+		temperature.setWrapText(true);
 		temperature.setEditable(false);
-		//temperature.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
-		temperature.setStyle("-fx-background-color: transparent; -fx-control-inner-background: transparent; -fx-border-color: transparent; -fx-text-fill: black;");
-		temperature.setText("Today's weather is: "+String.valueOf(forecast.get(0).temperature) + forecast.get(0).temperatureUnit );
+		temperature.setStyle("-fx-font-size: 40; -fx-background-color: transparent; -fx-control-inner-background: transparent; -fx-border-color: transparent; -fx-text-fill: black;");
 
 
 
@@ -70,22 +70,25 @@ public class JavaFX extends Application {
 		clock.setEditable(false);
 		clock.setStyle("-fx-background-color: transparent; -fx-control-inner-background: transparent; -fx-border-color: transparent; -fx-text-fill: black;");
 		clock.setWrapText(true);
-		clock.setText("Today Wind " +forecast.get(0).shortForecast);
 
 		detailOnDay = new TextArea("More detail about weather during day");
 		detailOnDay.setPrefSize(764,35);
 		detailOnDay.setEditable(false);
 		detailOnDay.setStyle("-fx-background-color: transparent; -fx-control-inner-background: transparent; -fx-border-color: transparent; -fx-text-fill: black;");
+		detailOnDay.setText(forecast.get(0).shortForecast);
 
 		tempPerHour =new TextArea("Display the temperature per hour");
 		tempPerHour.setPrefSize(763,117);
 		tempPerHour.setEditable(false);
 		tempPerHour.setStyle("-fx-background-color: transparent; -fx-control-inner-background: transparent; -fx-border-color: transparent; -fx-text-fill: black;");
 
-		wind = new TextArea("Wind\nHi");
+		wind = new TextArea();
+		wind.setText("Wind Speed\n\n" + forecast.getFirst().windSpeed);
 		wind.setPrefSize(160,160);
 		wind.setEditable(false);
-		wind.setStyle("-fx-background-color: transparent; -fx-control-inner-background: transparent; -fx-border-color: transparent; -fx-text-fill: black;");
+		wind.setWrapText(true);
+		wind.setStyle("-fx-font-size: 20; -fx-background-color: transparent; -fx-control-inner-background: transparent; -fx-border-color: transparent; -fx-text-fill: black;");
+
 
 		UV =new TextArea("UV");
 		UV.setPrefSize(160,160);
@@ -104,9 +107,9 @@ public class JavaFX extends Application {
 
 
 		vHome1 = new VBox(2, location,temperature);
-		hHome1 =new HBox(20, vHome1,description);
 		vHome2 = new VBox(3, detailOnDay,tempPerHour);
-		hHome2 = new HBox(20, clock,vHome2);
+		hHome1 =new HBox(20, vHome1,vHome2);
+		hHome2 = new HBox(20, clock,description);
 		hHome3 = new HBox(100, wind,UV, aqiIndex, prediction);
 		vHomeFinal = new VBox(3,hHome1,hHome2,hHome3);
 		//Home =new Scene(vHomeFinal,960,540);
