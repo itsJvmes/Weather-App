@@ -1,5 +1,6 @@
 import javafx.application.Application;
 
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -21,14 +22,15 @@ import java.util.ArrayList;
 
 public class JavaFX extends Application {
 	// Home Page
-	TextField location;
-	TextArea temperature,description, clock, shortDescription, tempPerHour, wind, UV, aqiIndex, prediction;
-	HBox hHome1,hHome2,hHome3;
-	VBox vHome1,vHome2, vHomeFinal;
+	Button predictionButton;
+	TextField location, temperature, date, windText,windSpeed,shortDescription;
+	TextArea  description;
+	HBox hHome1;
+	VBox vHome1,vHomeWind, vHomeFinal;
 	Scene Home;
 	// Weather in next 4 days page
 	Button homeButton;
-	TextArea weather1, weather2, weather3, weather4;
+	TextArea weather1, weather2,weather3,weather4;
 	HBox hWeather;
 	Scene weather4DPage;
 
@@ -47,6 +49,7 @@ public class JavaFX extends Application {
 		}
 
 		FileInputStream inputstream = new FileInputStream("Background/Landscape/Individual wallpapers/Stardew desktop - day.jpg");
+
 		Image image = new Image(inputstream);
 
 		ImageView imageView = new ImageView(image);
@@ -57,84 +60,94 @@ public class JavaFX extends Application {
 		imageView.setFitHeight(540);
 		imageView.setFitWidth(960);
 
-		location = new TextField("Chicago, ILsdfgsdfgsdfgdfsgsdfgsdfgsdfgsdfgsdfgdsfgdfsgdsfgsdfgdsfgdsfgsdfgdfg");
-		location.setPrefSize(160,40);
+		ImageView locationIcon = new ImageView("https://img.icons8.com/?size=100&id=7880&format=png&color=000000");
+		locationIcon.setFitHeight(40);
+		locationIcon.setFitWidth(40);
+		location = new TextField("Chicago, IL");
+		location.setPrefSize(215,58);
+		location.setMinSize(215, 58);
+		location.setMaxSize(215, 58);
 		location.setEditable(false);
-		location.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
+		location.setStyle("-fx-alignment: left;-fx-font-size: 30;-fx-background-color: transparent; -fx-border-color: transparent;");
+		HBox locationHBox = new HBox(locationIcon,location);
+		locationHBox.setAlignment(Pos.CENTER);
 
 
-		temperature= new TextArea();
+		//temperature= new TextArea();
+		temperature = new TextField();
 		temperature.setText(String.valueOf(forecast.getFirst().temperature) + "°" + forecast.getFirst().temperatureUnit);
-		temperature.setPrefSize(160,120);
-		temperature.setWrapText(true);
+		temperature.setPrefSize(200, 78);
+		temperature.setMinSize(200, 78);
+		temperature.setMaxSize(200, 78);
+		//temperature.setWrapText(true);
 		temperature.setEditable(false);
-		temperature.setStyle("-fx-font-size: 40; -fx-background-color: transparent; -fx-control-inner-background: transparent; -fx-border-color: transparent; -fx-text-fill: black;");
+		//temperature.setStyle("-fx-font-size: 40; -fx-background-color: transparent; -fx-control-inner-background: transparent; -fx-border-color: transparent; -fx-text-fill: black;");
+		temperature.setStyle("-fx-alignment: center;-fx-font-size:35;-fx-background-color: transparent; -fx-border-color: transparent;");
 
 
+
+		date = new TextField();
+		date.setText(forecast.getFirst().name);
+		date.setPrefSize(196,48);
+		date.setMaxSize(196,48);
+		date.setMinSize(196,48);
+		date.setEditable(false);
+		date.setStyle("-fx-alignment: center;-fx-font-size: 25; -fx-background-color: transparent; -fx-control-inner-background: transparent; -fx-border-color: transparent; -fx-text-fill: black;");
+
+		shortDescription = new TextField();
+		shortDescription.setPrefSize(892,42);
+		shortDescription.setMaxSize(892,42);
+		shortDescription.setMinSize(892,42);
+		shortDescription.setEditable(false);
+		shortDescription.setStyle("-fx-alignment: center;-fx-font-size: 25; -fx-background-color: transparent; -fx-control-inner-background: transparent; -fx-border-color: transparent; -fx-text-fill: black;");
+		shortDescription.setText(forecast.getFirst().shortForecast);
 
 		description = new TextArea("Description");
-		description.setPrefSize(763,160);
+		description.setPrefSize(892,42);
 		description.setEditable(false);
-		description.setStyle("-fx-font-size: 20; -fx-background-color: transparent; -fx-control-inner-background: transparent; -fx-border-color: transparent; -fx-text-fill: black;");
+		description.setStyle("-fx-font-size: 20; -fx-background-color: black; -fx-control-inner-background: transparent; -fx-border-color: transparent; -fx-text-fill: black;");
 		description.setWrapText(true);
 		description.setText(forecast.getFirst().detailedForecast);
 
+		windText = new TextField();
+		windText.setText("Wind Speed");
+		windText.setPrefSize(160,40);
+		windText.setEditable(false);
+		windText.setStyle("-fx-font-size: 20; -fx-background-color: transparent; -fx-control-inner-background: transparent; -fx-border-color: transparent; -fx-text-fill: black;");
 
-		clock = new TextArea("Time Clock");
-		clock.setPrefSize(160,160);
-		clock.setEditable(false);
-		clock.setStyle("-fx-background-color: transparent; -fx-control-inner-background: transparent; -fx-border-color: transparent; -fx-text-fill: black;");
-		clock.setWrapText(true);
+		windSpeed = new TextField();
+		windSpeed.setText(forecast.getFirst().windSpeed);
+		windSpeed.setPrefSize(160,40);
+		windSpeed.setEditable(false);
+		windSpeed.setStyle("-fx-font-size: 20; -fx-background-color: transparent; -fx-control-inner-background: transparent; -fx-border-color: transparent; -fx-text-fill: black;");
 
-		shortDescription = new TextArea();
-		shortDescription.setPrefSize(764,35);
-		shortDescription.setEditable(false);
-		shortDescription.setStyle("-fx-font-size: 20; -fx-background-color: transparent; -fx-control-inner-background: transparent; -fx-border-color: transparent; -fx-text-fill: black;");
-		shortDescription.setText(forecast.getFirst().shortForecast);
-
-		tempPerHour =new TextArea("Display the temperature per hour");
-		tempPerHour.setPrefSize(763,117);
-		tempPerHour.setEditable(false);
-		tempPerHour.setStyle("-fx-background-color: transparent; -fx-control-inner-background: transparent; -fx-border-color: transparent; -fx-text-fill: black;");
-
-		wind = new TextArea();
-		wind.setText("Wind Speed\n\n" + forecast.getFirst().windSpeed);
-		wind.setPrefSize(160,160);
-		wind.setEditable(false);
-		wind.setWrapText(true);
-		wind.setStyle("-fx-font-size: 20; -fx-background-color: transparent; -fx-control-inner-background: transparent; -fx-border-color: transparent; -fx-text-fill: black;");
-
-
-		UV =new TextArea("UV");
-		UV.setPrefSize(160,160);
-		UV.setEditable(false);
-		UV.setStyle("-fx-background-color: transparent; -fx-control-inner-background: transparent; -fx-border-color: transparent; -fx-text-fill: black;");
-
-		aqiIndex =new TextArea("AQI_index");
-		aqiIndex.setPrefSize(160,160);
-		aqiIndex.setEditable(false);
-		aqiIndex.setStyle("-fx-background-color: transparent; -fx-control-inner-background: transparent; -fx-border-color: transparent; -fx-text-fill: black;");
-
-		prediction =new TextArea("Predict weather of next 4 days");
-		prediction.setPrefSize(160,160);
-		prediction.setEditable(false);
-		prediction.setWrapText(true);
-		prediction.setStyle("-fx-background-color: transparent; -fx-control-inner-background: transparent; -fx-border-color: transparent; -fx-text-fill: black;");
+		Image predictionButtonIcon = new Image("https://img.icons8.com/?size=100&id=10053&format=png&color=000000");
+		ImageView predictionIcon = new ImageView(predictionButtonIcon);
+		predictionIcon.setFitHeight(50);
+		predictionIcon.setFitWidth(50);
+		predictionButton = new Button();
+		predictionButton.setGraphic(predictionIcon);
+		predictionButton.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
+		predictionButton.setOnAction(e->{primaryStage.setScene(weather4DPage);});
 
 
 
-		vHome1 = new VBox(2, location,temperature);
-		vHome2 = new VBox(3, shortDescription,tempPerHour);
-		hHome1 =new HBox(20, vHome1,vHome2);
-		hHome2 = new HBox(20, clock,description);
-		hHome3 = new HBox(100, wind,UV, aqiIndex, prediction);
-		vHomeFinal = new VBox(3,hHome1,hHome2,hHome3);
-		//Home =new Scene(vHomeFinal,960,540);
-		BorderPane p=new BorderPane();
+
+
+		vHome1 = new VBox(1, locationHBox,temperature,date, shortDescription);
+		vHome1.setAlignment(Pos.CENTER);
+		vHomeWind = new VBox(1, windText,windSpeed);
+		hHome1 = new HBox(300,vHomeWind, predictionButton);
+		hHome1.setAlignment(Pos.CENTER);
+		vHomeFinal = new VBox(10,vHome1,hHome1);
+		vHomeFinal.setAlignment(Pos.CENTER);
+
+
 		Group root = new Group(imageView,vHomeFinal);
-//		p.setCenter(vHomeFinal);
-//		p.setStyle("-fx-background-color: gray;");
-		Home  = new Scene(root,960,540);
+
+
+		Home = new Scene(root, 960, 540);
+
 
 		// Weather in next 4 days page
 		weather1 =new TextArea("Weather 1");
@@ -159,10 +172,11 @@ public class JavaFX extends Application {
 		homeIconView.setFitWidth(48);
 		homeButton = new Button("");
 		homeButton.setGraphic(homeIconView);
+		homeButton.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
 		homeButton.setOnAction(e -> {
 			primaryStage.setScene(Home);
 		});
-		prediction.setOnMouseClicked(e->{primaryStage.setScene(weather4DPage);});
+
 		hWeather = new HBox(2,homeButton, weather1, weather2, weather3, weather4);
 		BorderPane p1=new BorderPane();
 		p1.setCenter(hWeather);
