@@ -3,6 +3,7 @@ import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -48,9 +49,9 @@ public class JavaFX extends Application {
 			throw new RuntimeException("Forecast did not load");
 		}
 
-		FileInputStream inputstream = new FileInputStream("Background/Landscape/Individual wallpapers/Stardew desktop - day.jpg");
+		FileInputStream inputStream = new FileInputStream("Background/Autumn/Home - Autumn day.jpg");
 
-		Image image = new Image(inputstream);
+		Image image = new Image(inputStream);
 
 		ImageView imageView = new ImageView(image);
 
@@ -60,10 +61,12 @@ public class JavaFX extends Application {
 		imageView.setFitHeight(540);
 		imageView.setFitWidth(960);
 
-		ImageView locationIcon = new ImageView("https://img.icons8.com/?size=100&id=7880&format=png&color=000000");
+		ImageView locationIcon = new ImageView("https://64.media.tumblr.com/b94b27ab66ec7ea719061e0a48b16f56/tumblr_ock4mcbTIi1r4s4c0o1_400.gif");
 		locationIcon.setFitHeight(40);
 		locationIcon.setFitWidth(40);
 		location = new TextField("Chicago, IL");
+		DropShadow dropShadow = new DropShadow();
+		location.setEffect(dropShadow);
 		location.setPrefSize(215,58);
 		location.setMinSize(215, 58);
 		location.setMaxSize(215, 58);
