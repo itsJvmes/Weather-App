@@ -40,7 +40,6 @@ public class WeatherAPI {
             e.printStackTrace();
         }
         return toRet;
-
     }
 }
 
