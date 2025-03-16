@@ -133,10 +133,6 @@ public class JavaFX extends Application {
 		predictionButton.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
 		predictionButton.setOnAction(e->{primaryStage.setScene(weather4DPage);});
 
-
-
-
-
 		vHome1 = new VBox(1, locationHBox,temperature,date, shortDescription);
 		vHome1.setAlignment(Pos.CENTER);
 		vHomeWind = new VBox(1, windText,windSpeed);
@@ -145,12 +141,9 @@ public class JavaFX extends Application {
 		vHomeFinal = new VBox(10,vHome1,hHome1);
 		vHomeFinal.setAlignment(Pos.CENTER);
 
-
 		Group root = new Group(imageView,vHomeFinal);
 
-
 		Home = new Scene(root, 960, 540);
-
 
 		// Weather in next 4 days page
 		weather1 =new TextArea("Weather 1");
@@ -188,5 +181,4 @@ public class JavaFX extends Application {
 		primaryStage.setScene(Home);
 		primaryStage.show();
 	}
-
 }
