@@ -278,7 +278,6 @@ public class JavaFX extends Application {
 		Region blurredBackground = new Region();
 		blurredBackground.setPrefSize(width, height);
 		blurredBackground.setStyle("-fx-background-color: rgba(255, 255, 255, 0.5);"); // Semi-transparent white
-		//blurredBackground.setStyle("-fx-background-color: rgba(39,218,245,0.8);");
 		blurredBackground.setEffect(new GaussianBlur(80)); // Apply blur effect
 
 		// TextField with NO transparency (let the background handle blur)
