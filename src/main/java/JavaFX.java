@@ -1,5 +1,6 @@
 import javafx.application.Application;
 import javafx.geometry.Pos;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 public class JavaFX extends Application {
 
 	// Weather in next 4 days page
+	DropShadow dropShadow = new DropShadow();
 	int swapBGcount = 0;
 	String changeBGIcon = "https://img.icons8.com/?size=100&id=89962&format=png&color=000000";
 	String homeIcon = "https://img.icons8.com/?size=100&id=86527&format=png&color=000000";
@@ -47,12 +49,12 @@ public class JavaFX extends Application {
 			throw new RuntimeException("Forecast did not load");
 		}
 
+
 		FileInputStream wallpaperPredictionPage = new FileInputStream("Background/Summer/Home - Summer dawn.jpg");
 		Image wallpaper = new Image(wallpaperPredictionPage);
 		ImageView predictionPageView = new ImageView(wallpaper);
 		predictionPageView.setFitWidth(374);
 		predictionPageView.setFitHeight(810);
-
 
 		// Text Fields
 		StackPane day1 = createBlurredTextField(forecast.get(1).name, "center",23, 210, 72);
@@ -206,25 +208,25 @@ public class JavaFX extends Application {
 				"Background/Autumn/Home - Autumn day.jpg",
 				"Background/Autumn/Home - Autumn rain.jpg",
 				"Background/Autumn/Home - Autumn sunset.jpg",
-				"Background/Autumn/Home - Autumn midnight.jpg",
+
 
 				"Background/Spring/Home - Spring dawn.jpg",
 				"Background/Spring/Home - Spring day.jpg",
 				"Background/Spring/Home - Spring rain.jpg",
 				"Background/Spring/Home - Spring sunset.jpg",
-				"Background/Spring/Home - Spring midnight.jpg",
+
 
 				"Background/Summer/Home - Summer dawn.jpg",
 				"Background/Summer/Home - Summer day.jpg",
 				"Background/Summer/Home - Summer rain.jpg",
 				"Background/Summer/Home - Summer sunset.jpg",
-				"Background/Summer/Home - Summer midnight.jpg",
+
 
 				"Background/Winter/Home - Winter dawn.jpg",
 				"Background/Winter/Home - Winter day.jpg",
 				"Background/Winter/Home - Winter rain.jpg",
 				"Background/Winter/Home - Winter sunset.jpg",
-				"Background/Winter/Home - Winter midnight.jpg",
+
 		};
 		if (swapBGcount == links.length){
 			swapBGcount = 0;
@@ -270,14 +272,15 @@ public class JavaFX extends Application {
 				textField.setStyle(textField.getStyle() + "-fx-alignment: center-left;");
 				break;
 		}
-
+		textField.setEffect(dropShadow);
 		return textField;
 	}
 
 	private StackPane createBlurredTextField(String text,String alignment, int fontSize, double width, double height) {
 		Region blurredBackground = new Region();
 		blurredBackground.setPrefSize(width, height);
-		blurredBackground.setStyle("-fx-background-color: rgba(255, 255, 255, 0.5);"); // Semi-transparent white
+		//blurredBackground.setStyle("-fx-background-color: rgba(255, 255, 255, 0.5);"); // Semi-transparent white
+		blurredBackground.setStyle("-fx-background-color: transparent;");
 		blurredBackground.setEffect(new GaussianBlur(80)); // Apply blur effect
 
 		// TextField with NO transparency (let the background handle blur)
@@ -305,6 +308,7 @@ public class JavaFX extends Application {
 		// StackPane to overlay the blurred background and TextField
 		StackPane stack = new StackPane(blurredBackground, textField);
 		stack.setPrefSize(width, height);
+		stack.setEffect(dropShadow);
 		return stack;
 	}
 
