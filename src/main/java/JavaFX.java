@@ -31,7 +31,7 @@ public class JavaFX extends Application {
 	String directionIcon = "https://img.icons8.com/?size=100&id=9672&format=png&color=000000";
 	Button homeButton, changeBG, windSwapButton;
 	private boolean isWindScene = false;
-	TextField tempDay1,probDay1,tempDay1Night,probDay1Night, tempDay2, probDay2,tempDay2Night,probDay2Night, tempDay3, probDay3;
+	TextField tempDay1,probDay1,tempDay1Night,probDay1Night, tempDay2, probDay2,tempDay2Night,probDay2Night, tempDay3, probDay3,tempDay3Night, probDay3Night;
 	HBox hDay1, hDay1Night, hDay2, hDay2Night, hDay3, hDay3Night, hInteraction;
 	VBox vDay1, vDay1Night, vDay2, vDay2Night, vDay3, vDay3Night, vPredict;
 	Scene weather3DPage;
@@ -54,7 +54,7 @@ public class JavaFX extends Application {
 		predictionPageView.setFitHeight(810);
 
 
-		// Text Fields with Blurred Background
+		// Text Fields
 		StackPane day1 = createBlurredTextField(forecast.get(1).name, "center",23, 210, 72);
 		tempDay1 = createTextField(forecast.get(1).temperature + "°" + forecast.get(1).temperatureUnit, "left",18, 130, 25);
 		probDay1 = createTextField(String.valueOf(forecast.get(1).probabilityOfPrecipitation.value)+"%", "left",18, 130, 25);
@@ -76,8 +76,8 @@ public class JavaFX extends Application {
 		probDay3 = createTextField(String.valueOf(forecast.get(5).probabilityOfPrecipitation.value)+"%", "left",18, 130, 25);
 
 		StackPane day3Night = createBlurredTextField(forecast.get(6).name, "center",23, 210, 72);
-		TextField tempDay3Night = createTextField(forecast.get(6).temperature + "°" + forecast.get(6).temperatureUnit, "left",18, 130, 25);
-		TextField probDay3Night = createTextField(String.valueOf(forecast.get(6).probabilityOfPrecipitation.value)+"%", "left",18, 130, 25);
+		tempDay3Night = createTextField(forecast.get(6).temperature + "°" + forecast.get(6).temperatureUnit, "left",18, 130, 25);
+		probDay3Night = createTextField(String.valueOf(forecast.get(6).probabilityOfPrecipitation.value)+"%", "left",18, 130, 25);
 
 		// Buttons
 		changeBG = createIconButton(changeBGIcon);
