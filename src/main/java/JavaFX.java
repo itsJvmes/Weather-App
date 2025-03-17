@@ -232,6 +232,36 @@ public class JavaFX extends Application {
 		else{
 			swapBGcount+=1;
 		}
+		int temp = swapBGcount;
+		if ((temp+1)%5 ==0 ){
+			tempDay1.setStyle("-fx-font-size: " + 18 + "px; " + "-fx-background-color: transparent; " + "-fx-control-inner-background: transparent; " + "-fx-border-color: transparent; " +	"-fx-text-fill: white;");
+			probDay1.setStyle("-fx-font-size: " + 18 + "px; " + "-fx-background-color: transparent; " + "-fx-control-inner-background: transparent; " + "-fx-border-color: transparent; " +	"-fx-text-fill: white;");
+			tempDay1Night.setStyle("-fx-font-size: " + 18 + "px; " + "-fx-background-color: transparent; " + "-fx-control-inner-background: transparent; " + "-fx-border-color: transparent; " +	"-fx-text-fill: white;");
+			probDay1Night.setStyle("-fx-font-size: " + 18 + "px; " + "-fx-background-color: transparent; " + "-fx-control-inner-background: transparent; " + "-fx-border-color: transparent; " +	"-fx-text-fill: white;");
+			tempDay2.setStyle("-fx-font-size: " + 18 + "px; " + "-fx-background-color: transparent; " + "-fx-control-inner-background: transparent; " + "-fx-border-color: transparent; " +	"-fx-text-fill: white;");
+			probDay2.setStyle("-fx-font-size: " + 18 + "px; " + "-fx-background-color: transparent; " + "-fx-control-inner-background: transparent; " + "-fx-border-color: transparent; " +	"-fx-text-fill: white;");
+			tempDay2Night.setStyle("-fx-font-size: " + 18 + "px; " + "-fx-background-color: transparent; " + "-fx-control-inner-background: transparent; " + "-fx-border-color: transparent; " +	"-fx-text-fill: white;");
+			probDay2Night.setStyle("-fx-font-size: " + 18 + "px; " + "-fx-background-color: transparent; " + "-fx-control-inner-background: transparent; " + "-fx-border-color: transparent; " +	"-fx-text-fill: white;");
+			tempDay3.setStyle("-fx-font-size: " + 18 + "px; " + "-fx-background-color: transparent; " + "-fx-control-inner-background: transparent; " + "-fx-border-color: transparent; " +	"-fx-text-fill: white;");
+			probDay3.setStyle("-fx-font-size: " + 18 + "px; " + "-fx-background-color: transparent; " + "-fx-control-inner-background: transparent; " + "-fx-border-color: transparent; " +	"-fx-text-fill: white;");
+			tempDay3Night.setStyle("-fx-font-size: " + 18 + "px; " + "-fx-background-color: transparent; " + "-fx-control-inner-background: transparent; " + "-fx-border-color: transparent; " +	"-fx-text-fill: white;");
+			probDay3Night.setStyle("-fx-font-size: " + 18 + "px; " + "-fx-background-color: transparent; " + "-fx-control-inner-background: transparent; " + "-fx-border-color: transparent; " +	"-fx-text-fill: white;");
+
+		}
+		else{
+			tempDay1.setStyle("-fx-font-size: " + 18 + "px; " + "-fx-background-color: transparent; " + "-fx-control-inner-background: transparent; " + "-fx-border-color: transparent; " +	"-fx-text-fill: black;");
+			probDay1.setStyle("-fx-font-size: " + 18 + "px; " + "-fx-background-color: transparent; " + "-fx-control-inner-background: transparent; " + "-fx-border-color: transparent; " +	"-fx-text-fill: black;");
+			tempDay1Night.setStyle("-fx-font-size: " + 18 + "px; " + "-fx-background-color: transparent; " + "-fx-control-inner-background: transparent; " + "-fx-border-color: transparent; " +	"-fx-text-fill: black;");
+			probDay1Night.setStyle("-fx-font-size: " + 18 + "px; " + "-fx-background-color: transparent; " + "-fx-control-inner-background: transparent; " + "-fx-border-color: transparent; " +	"-fx-text-fill: black;");
+			tempDay2.setStyle("-fx-font-size: " + 18 + "px; " + "-fx-background-color: transparent; " + "-fx-control-inner-background: transparent; " + "-fx-border-color: transparent; " +	"-fx-text-fill: black;");
+			probDay2.setStyle("-fx-font-size: " + 18 + "px; " + "-fx-background-color: transparent; " + "-fx-control-inner-background: transparent; " + "-fx-border-color: transparent; " +	"-fx-text-fill: black;");
+			tempDay2Night.setStyle("-fx-font-size: " + 18 + "px; " + "-fx-background-color: transparent; " + "-fx-control-inner-background: transparent; " + "-fx-border-color: transparent; " +	"-fx-text-fill: black;");
+			probDay2Night.setStyle("-fx-font-size: " + 18 + "px; " + "-fx-background-color: transparent; " + "-fx-control-inner-background: transparent; " + "-fx-border-color: transparent; " +	"-fx-text-fill: black;");
+			tempDay3.setStyle("-fx-font-size: " + 18 + "px; " + "-fx-background-color: transparent; " + "-fx-control-inner-background: transparent; " + "-fx-border-color: transparent; " +	"-fx-text-fill: black;");
+			probDay3.setStyle("-fx-font-size: " + 18 + "px; " + "-fx-background-color: transparent; " + "-fx-control-inner-background: transparent; " + "-fx-border-color: transparent; " +	"-fx-text-fill: black;");
+			tempDay3Night.setStyle("-fx-font-size: " + 18 + "px; " + "-fx-background-color: transparent; " + "-fx-control-inner-background: transparent; " + "-fx-border-color: transparent; " +	"-fx-text-fill: black;");
+			probDay3Night.setStyle("-fx-font-size: " + 18 + "px; " + "-fx-background-color: transparent; " + "-fx-control-inner-background: transparent; " + "-fx-border-color: transparent; " +	"-fx-text-fill: black;");
+		}
 		return links[swapBGcount];
 	}
 
