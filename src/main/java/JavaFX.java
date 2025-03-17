@@ -56,28 +56,28 @@ public class JavaFX extends Application {
 
 		// Text Fields with Blurred Background
 		StackPane day1 = createBlurredTextField(forecast.get(1).name, "center",23, 210, 72);
-		tempDay1 = createTextField(forecast.get(1).temperature + "°" + forecast.get(1).temperatureUnit, "left",18, 140, 25);
-		probDay1 = createTextField(String.valueOf(forecast.get(1).probabilityOfPrecipitation.value)+"%", "left",18, 140, 25);
+		tempDay1 = createTextField(forecast.get(1).temperature + "°" + forecast.get(1).temperatureUnit, "left",18, 130, 25);
+		probDay1 = createTextField(String.valueOf(forecast.get(1).probabilityOfPrecipitation.value)+"%", "left",18, 130, 25);
 
 		StackPane day1Night = createBlurredTextField(forecast.get(2).name, "center",23, 210, 72);
-		tempDay1Night = createTextField(forecast.get(2).temperature + "°" + forecast.get(2).temperatureUnit, "left",18, 140, 25);
-		probDay1Night = createTextField(String.valueOf(forecast.get(2).probabilityOfPrecipitation.value)+"%","left", 18, 140, 25);
+		tempDay1Night = createTextField(forecast.get(2).temperature + "°" + forecast.get(2).temperatureUnit, "left",18, 130, 25);
+		probDay1Night = createTextField(String.valueOf(forecast.get(2).probabilityOfPrecipitation.value)+"%","left", 18, 130, 25);
 
 		StackPane day2 = createBlurredTextField(forecast.get(3).name, "center",23, 210, 72);
-		tempDay2 = createTextField(forecast.get(3).temperature + "°" + forecast.get(3).temperatureUnit, "left",18, 140, 25);
-		probDay2 = createTextField(String.valueOf(forecast.get(3).probabilityOfPrecipitation.value)+"%", "left",18, 140, 25);
+		tempDay2 = createTextField(forecast.get(3).temperature + "°" + forecast.get(3).temperatureUnit, "left",18, 130, 25);
+		probDay2 = createTextField(String.valueOf(forecast.get(3).probabilityOfPrecipitation.value)+"%", "left",18, 130, 25);
 
 		StackPane day2Night = createBlurredTextField(forecast.get(4).name, "center",23, 210, 72);
-		tempDay2Night = createTextField(forecast.get(4).temperature + "°" + forecast.get(4).temperatureUnit, "left",18, 140, 25);
-		probDay2Night = createTextField(String.valueOf(forecast.get(4).probabilityOfPrecipitation.value)+"%", "left",18, 140, 25);
+		tempDay2Night = createTextField(forecast.get(4).temperature + "°" + forecast.get(4).temperatureUnit, "left",18, 130, 25);
+		probDay2Night = createTextField(String.valueOf(forecast.get(4).probabilityOfPrecipitation.value)+"%", "left",18, 130, 25);
 
 		StackPane day3 = createBlurredTextField(forecast.get(5).name, "center",23, 210, 72);
-		tempDay3 = createTextField(forecast.get(5).temperature + "°" + forecast.get(5).temperatureUnit, "left",18, 140, 25);
-		probDay3 = createTextField(String.valueOf(forecast.get(5).probabilityOfPrecipitation.value)+"%", "left",18, 140, 25);
+		tempDay3 = createTextField(forecast.get(5).temperature + "°" + forecast.get(5).temperatureUnit, "left",18, 130, 25);
+		probDay3 = createTextField(String.valueOf(forecast.get(5).probabilityOfPrecipitation.value)+"%", "left",18, 130, 25);
 
 		StackPane day3Night = createBlurredTextField(forecast.get(6).name, "center",23, 210, 72);
-		TextField tempDay3Night = createTextField(forecast.get(6).temperature + "°" + forecast.get(6).temperatureUnit, "left",18, 140, 25);
-		TextField probDay3Night = createTextField(String.valueOf(forecast.get(6).probabilityOfPrecipitation.value)+"%", "left",18, 140, 25);
+		TextField tempDay3Night = createTextField(forecast.get(6).temperature + "°" + forecast.get(6).temperatureUnit, "left",18, 130, 25);
+		TextField probDay3Night = createTextField(String.valueOf(forecast.get(6).probabilityOfPrecipitation.value)+"%", "left",18, 130, 25);
 
 		// Buttons
 		changeBG = createIconButton(changeBGIcon);
@@ -169,26 +169,26 @@ public class JavaFX extends Application {
 
 		// Layout
 		vDay1 = new VBox(createTextFieldWithIcon(tempDay1,tempIcon), createTextFieldWithIcon(probDay1,rainIcon));
-		hDay1 = new HBox(20,day1, vDay1);
+		hDay1 = new HBox(10,day1, vDay1);
 
 		vDay1Night = new VBox(createTextFieldWithIcon(tempDay1Night,tempIcon), createTextFieldWithIcon(probDay1Night,rainIcon));
-		hDay1Night = new HBox(20,day1Night, vDay1Night);
+		hDay1Night = new HBox(10,day1Night, vDay1Night);
 
 		vDay2 = new VBox(createTextFieldWithIcon(tempDay2,tempIcon), createTextFieldWithIcon(probDay2,rainIcon));
-		hDay2 = new HBox(20,day2, vDay2);
+		hDay2 = new HBox(10,day2, vDay2);
 
 		vDay2Night = new VBox(createTextFieldWithIcon(tempDay2Night,tempIcon), createTextFieldWithIcon(probDay2Night,rainIcon));
-		hDay2Night = new HBox(20,day2Night, vDay2Night);
+		hDay2Night = new HBox(10,day2Night, vDay2Night);
 
 		vDay3 = new VBox(createTextFieldWithIcon(tempDay3,tempIcon), createTextFieldWithIcon(probDay3,rainIcon));
-		hDay3 = new HBox(20,day3, vDay3);
+		hDay3 = new HBox(10,day3, vDay3);
 
 		vDay3Night = new VBox(createTextFieldWithIcon(tempDay3Night,tempIcon), createTextFieldWithIcon(probDay3Night,rainIcon));
-		hDay3Night = new HBox(20,day3Night, vDay3Night);
+		hDay3Night = new HBox(10,day3Night, vDay3Night);
 
-		vPredict = new VBox(20, hDay1, hDay1Night, hDay2, hDay2Night, hDay3, hDay3Night);
+		vPredict = new VBox(10, hDay1, hDay1Night, hDay2, hDay2Night, hDay3, hDay3Night);
 		vPredict.setStyle("-fx-alignment: center;");
-		hInteraction = new HBox(85, changeBG, homeButton, windSwapButton);
+		hInteraction = new HBox(90, changeBG, homeButton, windSwapButton);
 
 
 		VBox layoutPrediction = new VBox(210, vPredict, hInteraction);
