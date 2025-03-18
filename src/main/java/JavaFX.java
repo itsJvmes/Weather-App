@@ -24,15 +24,19 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class JavaFX extends Application {
+	GridInfo gridInfo;
 	ArrayList<Period> forecast;
+
 	// Home page and main weather page
+	TextField degreeField, lonOption, latOption, locationField, currLocation;
 	Boolean unitF = true;
-	Button changeTempUnit,settingButton;
+	Button settingButton, searchButton, unitField;
 	SimpleDateFormat currDate, currTime;
 	Date now;
-	TextField date,time,degree, temperatureUnit;
+	TextField date,time,degree;
 	DropShadow dropShadow = new DropShadow();
 	Scene homeScene, settingScene, weatherAppScene;
+
 	// Weather in next 4 days page
 	int swapBGcount = 0;
 	String changeBGIcon = "https://img.icons8.com/?size=100&id=102352&format=png&color=000000";
@@ -53,7 +57,7 @@ public class JavaFX extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		primaryStage.setTitle("Weather App");
-		GridInfo gridInfo = MyWeatherAPI.convertLatLonToGrid("41.8832","-87.6324");
+		gridInfo = MyWeatherAPI.convertLatLonToGrid("41.8832","-87.6324");
 		//forecast = WeatherAPI.getForecast("LOT",77,70);
 		forecast = WeatherAPI.getForecast(gridInfo.region,gridInfo.gridX, gridInfo.gridY);
 		//System.out.println(gridInfo.city+", "+gridInfo.state+ " at "+gridInfo.gridX+" "+gridInfo.gridY);
@@ -138,7 +142,7 @@ public class JavaFX extends Application {
 		settingButton.setGraphic(app2Viewer);
 		settingButton.setStyle("-fx-background-color: transparent;");
 		settingButton.setOnAction(event -> {
-			primaryStage.setScene(weatherAppScene); // FIX
+			primaryStage.setScene(settingScene); // FIX
 		});
 
 
@@ -177,6 +181,75 @@ public class JavaFX extends Application {
 		// Stack everything together
 		StackPane fullscreen = new StackPane();
 		fullscreen.getChildren().addAll(wallpaperView, borderPane);
+
+		// Setting Screen
+
+		unitField = new Button("Change Unit ");
+		unitField.setStyle("-fx-background-color: transparent;");
+		unitField.setOnAction(event -> {
+			if (degreeField.getText().equals("Fahrenheit")) {
+				degreeField.setText("Celsius");
+				changeUnit();
+			} else {
+				degreeField.setText("Fahrenheit");
+				changeUnit();
+			}
+		});
+
+		degreeField = new TextField();
+		degreeField.setText("Fahrenheit");
+		degreeField.setAlignment(Pos.CENTER);
+		degreeField.setEditable(false);
+
+		HBox unitArea = new HBox(30, unitField, degreeField);
+		unitArea.setAlignment(Pos.CENTER);
+
+		lonOption = new TextField();
+		lonOption.setPromptText("Enter Longitude");
+		lonOption.setAlignment(Pos.CENTER);
+		lonOption.setPrefSize(120, 120);
+		lonOption.setMaxSize(120, 120);
+		lonOption.setMinSize(120, 120);
+
+		latOption = new TextField();
+		latOption.setPromptText("Enter Latitude");
+		latOption.setAlignment(Pos.CENTER);
+		latOption.setPrefSize(120, 120);
+		latOption.setMaxSize(120, 120);
+		latOption.setMinSize(120, 120);
+
+		HBox CoordArea = new HBox(30, latOption, lonOption);
+		CoordArea.setAlignment(Pos.CENTER);
+
+		searchButton= new Button("Search");
+		searchButton.setAlignment(Pos.CENTER);
+		searchButton.setOnAction(event -> {
+			gridInfo = MyWeatherAPI.convertLatLonToGrid(latOption.getText(), lonOption.getText());
+			forecast = WeatherAPI.getForecast(gridInfo.region, gridInfo.gridX, gridInfo.gridY);
+			locationField.setText(gridInfo.city + ", " + gridInfo.state);
+		});
+
+		currLocation = new TextField();
+		currLocation.setText("Current Location: ");
+		currLocation.setAlignment(Pos.CENTER);
+		currLocation.setStyle("-fx-background-color: transparent;");
+
+		locationField = new TextField();
+		locationField.setText("Location: ");
+		locationField.setAlignment(Pos.CENTER);
+		locationField.setStyle("-fx-background-color: transparent;");
+
+		Button homeSettingButton = new Button("Home");
+		homeSettingButton.setStyle("-fx-background-color: transparent;");
+		homeSettingButton.setOnAction(event -> {
+			primaryStage.setScene(homeScene);
+		});
+
+		VBox settingBox = new VBox(30, unitArea, CoordArea, searchButton, currLocation ,locationField, homeSettingButton);
+		settingBox.setAlignment(Pos.CENTER);
+
+		settingScene = new Scene(settingBox, 374, 810);
+
 
 		// WEATHER MAIN SCREEN
 		// Load wallpaper image
@@ -620,8 +693,8 @@ public class JavaFX extends Application {
 		return button;
 	}
 	private double formularToC(int temperatureF){
-		return ((temperatureF-32) /1.8);
-}
+		return ((temperatureF - 32) * (5.0 / 9.0));
+	}
 	private void changeUnit() {
 		if (unitF) {
 			degree.setText(String.valueOf(Math.round(formularToC(forecast.get(0).temperature)))+"°C");
