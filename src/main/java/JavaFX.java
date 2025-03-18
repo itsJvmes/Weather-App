@@ -24,12 +24,15 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class JavaFX extends Application {
+	ArrayList<Period> forecast;
 	// Home page and main weather page
+	Boolean unitF = true;
+	Button changeTempUnit,settingButton;
 	SimpleDateFormat currDate, currTime;
 	Date now;
-	TextField date,time;
+	TextField date,time,degree, temperatureUnit;
 	DropShadow dropShadow = new DropShadow();
-	Scene homeScene, weatherAppScene;
+	Scene homeScene, settingScene, weatherAppScene;
 	// Weather in next 4 days page
 	int swapBGcount = 0;
 	String changeBGIcon = "https://img.icons8.com/?size=100&id=102352&format=png&color=000000";
@@ -50,7 +53,7 @@ public class JavaFX extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		primaryStage.setTitle("Weather App");
-		ArrayList<Period> forecast = WeatherAPI.getForecast("LOT",77,70);
+		forecast = WeatherAPI.getForecast("LOT",77,70);
 		if (forecast == null){
 			throw new RuntimeException("Forecast did not load");
 		}
@@ -128,18 +131,13 @@ public class JavaFX extends Application {
 		ImageView app2Viewer = new ImageView(app2Icon);
 		app2Viewer.setFitHeight(81);
 		app2Viewer.setFitWidth(81);
-		Button app2Button = new Button();
-		app2Button.setGraphic(app1Viewer);
-		app2Button.setStyle("-fx-background-color: transparent;");
+		settingButton = new Button();
+		settingButton.setGraphic(app2Viewer);
+		settingButton.setStyle("-fx-background-color: transparent;");
+		settingButton.setOnAction(event -> {
+			primaryStage.setScene(weatherAppScene); // FIX
+		});
 
-		FileInputStream app3FileName = new FileInputStream("Background/icons8-developer-100.png");
-		Image app3Icon = new Image(app3FileName);
-		ImageView app3Viewer = new ImageView(app3Icon);
-		app3Viewer.setFitHeight(81);
-		app3Viewer.setFitWidth(81);
-		Button app3Button = new Button();
-		app3Button.setGraphic(app1Viewer);
-		app3Button.setStyle("-fx-background-color: transparent;");
 
 		// Create date, time, and icons layout
 		HBox iconArea = new HBox(junimo1, junimo2);
@@ -160,7 +158,7 @@ public class JavaFX extends Application {
 		BorderPane.setMargin(topContainer, new Insets(10, 10, 0, 0));
 
 		// Create app icons layout
-		HBox appArea = new HBox(app1Button, app2Viewer, app3Viewer);
+		HBox appArea = new HBox(app1Button, settingButton);
 		appArea.setAlignment(Pos.CENTER);
 		appArea.setSpacing(60);
 		appArea.setPrefSize(375, 100);
@@ -215,7 +213,7 @@ public class JavaFX extends Application {
 		HBox locationArea = new HBox(iconLocation1, location, iconLocation2);
 		locationArea.setAlignment(Pos.CENTER);
 
-		TextField degree = new TextField();
+		degree = new TextField();
 		degree.setText(forecast.getFirst().temperature + "°" + forecast.getFirst().temperatureUnit);
 		degree.setEffect(dropShadow);
 		degree.setPrefSize(195, 80);
@@ -617,6 +615,30 @@ public class JavaFX extends Application {
 		button.setGraphic(iconView);
 		button.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
 		return button;
+	}
+	private double formularToC(int temperatureF){
+		return ((temperatureF-32) /1.8);
+}
+	private void changeUnit() {
+		if (unitF) {
+			degree.setText(String.valueOf(Math.round(formularToC(forecast.get(0).temperature)))+"°C");
+			tempDay1.setText(String.valueOf(Math.round(formularToC(forecast.get(1).temperature)))+"°C");
+			tempDay1Night.setText(String.valueOf(Math.round(formularToC(forecast.get(2).temperature)))+"°C");
+			tempDay2.setText(String.valueOf(Math.round(formularToC(forecast.get(3).temperature)))+"°C");
+			tempDay2Night.setText(String.valueOf(Math.round(formularToC(forecast.get(4).temperature)))+"°C");
+			tempDay3.setText(String.valueOf(Math.round(formularToC(forecast.get(5).temperature)))+"°C");
+			tempDay3Night.setText(String.valueOf(Math.round(formularToC(forecast.get(6).temperature)))+"°C");
+		} else {
+			degree.setText(forecast.getFirst().temperature + "°F");
+			tempDay1.setText(forecast.get(1).temperature + "°F");
+			tempDay1Night.setText(forecast.get(2).temperature + "°F");
+			tempDay2.setText(forecast.get(3).temperature + "°F");
+			tempDay2Night.setText(forecast.get(4).temperature + "°F");
+			tempDay3.setText(forecast.get(5).temperature + "°F");
+			tempDay3Night.setText(forecast.get(6).temperature + "°F");
+
+		}
+		unitF=!unitF;
 	}
 
 	private String iconBasedOnShortDesc(String shortDesc) {
