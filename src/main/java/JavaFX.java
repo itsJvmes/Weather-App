@@ -35,7 +35,7 @@ public class JavaFX extends Application {
 	String changeBGIcon = "https://img.icons8.com/?size=100&id=102352&format=png&color=000000";
 	String home3DIcon = "https://img.icons8.com/?size=100&id=xHeTZeKGjXUD&format=png&color=000000";
 	String tempIcon = "https://img.icons8.com/?size=100&id=7q580FH1Tah7&format=png&color=000000";
-	String rainIcon = "https://img.icons8.com/?size=100&id=67594&format=png&color=000000";
+	String umbrellaIcon = "https://img.icons8.com/?size=100&id=IgkEaRo6KwmP&format=png&color=000000";
 	String windIcon = "https://img.icons8.com/?size=100&id=KXHiLGrszdFI&format=png&color=000000";
 	String weatherIcon  = "https://img.icons8.com/?size=100&id=67538&format=png&color=000000";
 	String directionIcon = "https://img.icons8.com/?size=100&id=67355&format=png&color=000000";
@@ -428,12 +428,18 @@ public class JavaFX extends Application {
 				probDay3Night.setText(forecast.get(6).probabilityOfPrecipitation.value + "%");
 
 				// Update icons for all fields
-				vDay1.getChildren().setAll(createTextFieldWithIcon(tempDay1, tempIcon), createTextFieldWithIcon(probDay1, rainIcon));
-				vDay1Night.getChildren().setAll(createTextFieldWithIcon(tempDay1Night, tempIcon), createTextFieldWithIcon(probDay1Night, rainIcon));
-				vDay2.getChildren().setAll(createTextFieldWithIcon(tempDay2, tempIcon), createTextFieldWithIcon(probDay2, rainIcon));
-				vDay2Night.getChildren().setAll(createTextFieldWithIcon(tempDay2Night, tempIcon), createTextFieldWithIcon(probDay2Night, rainIcon));
-				vDay3.getChildren().setAll(createTextFieldWithIcon(tempDay3, tempIcon), createTextFieldWithIcon(probDay3, rainIcon));
-				vDay3Night.getChildren().setAll(createTextFieldWithIcon(tempDay3Night, tempIcon), createTextFieldWithIcon(probDay3Night, rainIcon));
+				tempIcon = iconBasedOnShortDesc(forecast.get(1).shortForecast);
+				vDay1.getChildren().setAll(createTextFieldWithIcon(tempDay1, tempIcon), createTextFieldWithIcon(probDay1, umbrellaIcon));
+				tempIcon = iconBasedOnShortDesc(forecast.get(2).shortForecast);
+				vDay1Night.getChildren().setAll(createTextFieldWithIcon(tempDay1Night, tempIcon), createTextFieldWithIcon(probDay1Night, umbrellaIcon));
+				tempIcon = iconBasedOnShortDesc(forecast.get(3).shortForecast);
+				vDay2.getChildren().setAll(createTextFieldWithIcon(tempDay2, tempIcon), createTextFieldWithIcon(probDay2, umbrellaIcon));
+				tempIcon = iconBasedOnShortDesc(forecast.get(4).shortForecast);
+				vDay2Night.getChildren().setAll(createTextFieldWithIcon(tempDay2Night, tempIcon), createTextFieldWithIcon(probDay2Night, umbrellaIcon));
+				tempIcon = iconBasedOnShortDesc(forecast.get(5).shortForecast);
+				vDay3.getChildren().setAll(createTextFieldWithIcon(tempDay3, tempIcon), createTextFieldWithIcon(probDay3, umbrellaIcon));
+				tempIcon = iconBasedOnShortDesc(forecast.get(6).shortForecast);
+				vDay3Night.getChildren().setAll(createTextFieldWithIcon(tempDay3Night, tempIcon), createTextFieldWithIcon(probDay3Night, umbrellaIcon));
 
 				// Update the button icon
 				Image icon = new Image(windIcon);
@@ -447,22 +453,28 @@ public class JavaFX extends Application {
 
 
 		// Layout
-		vDay1 = new VBox(createTextFieldWithIcon(tempDay1,tempIcon), createTextFieldWithIcon(probDay1,rainIcon));
+		tempIcon = iconBasedOnShortDesc(forecast.get(1).shortForecast);
+		vDay1 = new VBox(createTextFieldWithIcon(tempDay1,tempIcon), createTextFieldWithIcon(probDay1, umbrellaIcon));
 		hDay1 = new HBox(10,day1, vDay1);
 
-		vDay1Night = new VBox(createTextFieldWithIcon(tempDay1Night,tempIcon), createTextFieldWithIcon(probDay1Night,rainIcon));
+		tempIcon = iconBasedOnShortDesc(forecast.get(2).shortForecast);
+		vDay1Night = new VBox(createTextFieldWithIcon(tempDay1Night,tempIcon), createTextFieldWithIcon(probDay1Night, umbrellaIcon));
 		hDay1Night = new HBox(10,day1Night, vDay1Night);
 
-		vDay2 = new VBox(createTextFieldWithIcon(tempDay2,tempIcon), createTextFieldWithIcon(probDay2,rainIcon));
+		tempIcon = iconBasedOnShortDesc(forecast.get(3).shortForecast);
+		vDay2 = new VBox(createTextFieldWithIcon(tempDay2,tempIcon), createTextFieldWithIcon(probDay2, umbrellaIcon));
 		hDay2 = new HBox(10,day2, vDay2);
 
-		vDay2Night = new VBox(createTextFieldWithIcon(tempDay2Night,tempIcon), createTextFieldWithIcon(probDay2Night,rainIcon));
+		tempIcon = iconBasedOnShortDesc(forecast.get(4).shortForecast);
+		vDay2Night = new VBox(createTextFieldWithIcon(tempDay2Night,tempIcon), createTextFieldWithIcon(probDay2Night, umbrellaIcon));
 		hDay2Night = new HBox(10,day2Night, vDay2Night);
 
-		vDay3 = new VBox(createTextFieldWithIcon(tempDay3,tempIcon), createTextFieldWithIcon(probDay3,rainIcon));
+		tempIcon = iconBasedOnShortDesc(forecast.get(5).shortForecast);
+		vDay3 = new VBox(createTextFieldWithIcon(tempDay3,tempIcon), createTextFieldWithIcon(probDay3, umbrellaIcon));
 		hDay3 = new HBox(10,day3, vDay3);
 
-		vDay3Night = new VBox(createTextFieldWithIcon(tempDay3Night,tempIcon), createTextFieldWithIcon(probDay3Night,rainIcon));
+		tempIcon = iconBasedOnShortDesc(forecast.get(6).shortForecast);
+		vDay3Night = new VBox(createTextFieldWithIcon(tempDay3Night,tempIcon), createTextFieldWithIcon(probDay3Night, umbrellaIcon));
 		hDay3Night = new HBox(10,day3Night, vDay3Night);
 
 		vPredict = new VBox(10, hDay1, hDay1Night, hDay2, hDay2Night, hDay3, hDay3Night);
@@ -605,5 +617,25 @@ public class JavaFX extends Application {
 		button.setGraphic(iconView);
 		button.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
 		return button;
+	}
+
+	private String iconBasedOnShortDesc(String shortDesc) {
+		if (shortDesc.contains("Sunny")) {
+			return "https://img.icons8.com/?size=100&id=67607&format=png&color=000000";
+		} else if (shortDesc.contains("Rainy")) {
+			return "https://img.icons8.com/?size=100&id=67594&format=png&color=000000";
+		} else if (shortDesc.contains("Cloudy")) {
+			return "https://img.icons8.com/?size=100&id=67538&format=png&color=000000";
+		} else if (shortDesc.contains("Clear")) {
+			return "https://img.icons8.com/?size=100&id=67614&format=png&color=000000";
+		} else if (shortDesc.contains("Shower")) {
+			return "https://img.icons8.com/?size=100&id=51451&format=png&color=000000";
+		} else if (shortDesc.contains("Thunderstorm")) {
+			return "https://img.icons8.com/?size=100&id=67614&format=png&color=000000";
+		} else if (shortDesc.contains("Snow")) {
+			return "https://img.icons8.com/?size=100&id=qp5AWjqoNOSD&format=png&color=000000";
+		} else {
+			return "https://img.icons8.com/?size=100&id=67538&format=png&color=000000";
+		}
 	}
 }
