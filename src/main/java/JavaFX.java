@@ -32,13 +32,13 @@ public class JavaFX extends Application {
 	Scene homeScene, weatherAppScene;
 	// Weather in next 4 days page
 	int swapBGcount = 0;
-	String changeBGIcon = "https://img.icons8.com/?size=100&id=89962&format=png&color=000000";
-	String home3DIcon = "https://img.icons8.com/?size=100&id=86527&format=png&color=000000";
-	String tempIcon = "https://img.icons8.com/?size=100&id=648&format=png&color=000000";
-	String rainIcon = "https://img.icons8.com/?size=100&id=656&format=png&color=000000";
-	String windIcon = "https://img.icons8.com/?size=100&id=74197&format=png&color=000000";
-	String weatherIcon  = "https://img.icons8.com/?size=100&id=Zb9EIGS9RBLh&format=png&color=000000";
-	String directionIcon = "https://img.icons8.com/?size=100&id=9672&format=png&color=000000";
+	String changeBGIcon = "https://img.icons8.com/?size=100&id=102352&format=png&color=000000";
+	String home3DIcon = "https://img.icons8.com/?size=100&id=xHeTZeKGjXUD&format=png&color=000000";
+	String tempIcon = "https://img.icons8.com/?size=100&id=7q580FH1Tah7&format=png&color=000000";
+	String rainIcon = "https://img.icons8.com/?size=100&id=67594&format=png&color=000000";
+	String windIcon = "https://img.icons8.com/?size=100&id=KXHiLGrszdFI&format=png&color=000000";
+	String weatherIcon  = "https://img.icons8.com/?size=100&id=67538&format=png&color=000000";
+	String directionIcon = "https://img.icons8.com/?size=100&id=67355&format=png&color=000000";
 	Button home3DButton, changeBG, windSwapButton;
 	private boolean isWindScene = false;
 	TextField tempDay1,probDay1,tempDay1Night,probDay1Night, tempDay2, probDay2,tempDay2Night,probDay2Night, tempDay3, probDay3,tempDay3Night, probDay3Night;
@@ -187,11 +187,11 @@ public class JavaFX extends Application {
 		wallpaperView.setFitWidth(374);
 		wallpaperView.setFitHeight(810);
 
-		ImageView iconLocation1 = new ImageView(app1Icon);
+		ImageView iconLocation1 = new ImageView("https://img.icons8.com/?size=100&id=124191&format=png&color=000000");
 		iconLocation1.setFitHeight(25);
 		iconLocation1.setFitWidth(25);
 
-		ImageView iconLocation2 = new ImageView(app1Icon);
+		ImageView iconLocation2 = new ImageView("https://img.icons8.com/?size=100&id=124191&format=png&color=000000");
 		iconLocation2.setFitHeight(30);
 		iconLocation2.setFitWidth(30);
 
@@ -281,7 +281,7 @@ public class JavaFX extends Application {
 		VBox windArea = new VBox(windTitle, windDescription);
 		windArea.setAlignment(Pos.CENTER);
 
-		ImageView predictIcon = new ImageView("https://cdnl.iconscout.com/lottie/premium/thumb/sun-and-rain-6634621-5576469.gif");
+		ImageView predictIcon = new ImageView("https://img.icons8.com/?size=100&id=67571&format=png&color=000000");
 		predictIcon.setFitHeight(54);
 		predictIcon.setFitWidth(54);
 
@@ -292,7 +292,7 @@ public class JavaFX extends Application {
 			primaryStage.setScene(weather3DPage);
 		});
 
-		ImageView homeIcon = new ImageView("https://img1.picmix.com/output/stamp/normal/0/8/4/1/2231480_8738c.gif");
+		ImageView homeIcon = new ImageView("https://img.icons8.com/?size=100&id=xHeTZeKGjXUD&format=png&color=000000");
 		homeIcon.setFitHeight(54);
 		homeIcon.setFitWidth(54);
 		Button homeButton = new Button();
@@ -307,7 +307,7 @@ public class JavaFX extends Application {
 		// buttons in main weather page
 		HBox bottomContainer = new HBox(homeButton, predictSceneButton);
 		bottomContainer.setAlignment(Pos.BOTTOM_RIGHT);
-		bottomContainer.setSpacing(20);
+		bottomContainer.setSpacing(70);
 		bottomContainer.setPadding(new Insets(10, 10, 10, 10));
 
 		VBox weatherVBox = new VBox(locationArea, degreeArea, shortDescription, windArea);
@@ -331,27 +331,27 @@ public class JavaFX extends Application {
 		predictionPageView.setFitHeight(810);
 
 		// Text Fields
-		StackPane day1 = createBlurredTextField(forecast.get(1).name, "center",23, 210, 72);
+		StackPane day1 = createBlurredTextField(forecast.get(1).name, "left",23, 210, 72);
 		tempDay1 = createTextField(forecast.get(1).temperature + "°" + forecast.get(1).temperatureUnit, "left",18, 130, 25);
 		probDay1 = createTextField(String.valueOf(forecast.get(1).probabilityOfPrecipitation.value)+"%", "left",18, 130, 25);
 
-		StackPane day1Night = createBlurredTextField(forecast.get(2).name, "center",23, 210, 72);
+		StackPane day1Night = createBlurredTextField(forecast.get(2).name, "left",23, 210, 72);
 		tempDay1Night = createTextField(forecast.get(2).temperature + "°" + forecast.get(2).temperatureUnit, "left",18, 130, 25);
 		probDay1Night = createTextField(String.valueOf(forecast.get(2).probabilityOfPrecipitation.value)+"%","left", 18, 130, 25);
 
-		StackPane day2 = createBlurredTextField(forecast.get(3).name, "center",23, 210, 72);
+		StackPane day2 = createBlurredTextField(forecast.get(3).name, "left",23, 210, 72);
 		tempDay2 = createTextField(forecast.get(3).temperature + "°" + forecast.get(3).temperatureUnit, "left",18, 130, 25);
 		probDay2 = createTextField(String.valueOf(forecast.get(3).probabilityOfPrecipitation.value)+"%", "left",18, 130, 25);
 
-		StackPane day2Night = createBlurredTextField(forecast.get(4).name, "center",23, 210, 72);
+		StackPane day2Night = createBlurredTextField(forecast.get(4).name, "left",23, 210, 72);
 		tempDay2Night = createTextField(forecast.get(4).temperature + "°" + forecast.get(4).temperatureUnit, "left",18, 130, 25);
 		probDay2Night = createTextField(String.valueOf(forecast.get(4).probabilityOfPrecipitation.value)+"%", "left",18, 130, 25);
 
-		StackPane day3 = createBlurredTextField(forecast.get(5).name, "center",23, 210, 72);
+		StackPane day3 = createBlurredTextField(forecast.get(5).name, "left",23, 210, 72);
 		tempDay3 = createTextField(forecast.get(5).temperature + "°" + forecast.get(5).temperatureUnit, "left",18, 130, 25);
 		probDay3 = createTextField(String.valueOf(forecast.get(5).probabilityOfPrecipitation.value)+"%", "left",18, 130, 25);
 
-		StackPane day3Night = createBlurredTextField(forecast.get(6).name, "center",23, 210, 72);
+		StackPane day3Night = createBlurredTextField(forecast.get(6).name, "left",23, 210, 72);
 		tempDay3Night = createTextField(forecast.get(6).temperature + "°" + forecast.get(6).temperatureUnit, "left",18, 130, 25);
 		probDay3Night = createTextField(String.valueOf(forecast.get(6).probabilityOfPrecipitation.value)+"%", "left",18, 130, 25);
 
