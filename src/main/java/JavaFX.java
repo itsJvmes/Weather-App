@@ -111,11 +111,11 @@ public class JavaFX extends Application {
 		junimo2.setFitWidth(30);
 
 		// Load app icons
-		FileInputStream app1FileName = new FileInputStream("Background/Weather_Report (1).png");
+		FileInputStream app1FileName = new FileInputStream("Background/icons8-weather-100.png");
 		Image  app1Icon= new Image(app1FileName);
 		ImageView app1Viewer = new ImageView(app1Icon);
-		app1Viewer.setFitHeight(54);
-		app1Viewer.setFitWidth(54);
+		app1Viewer.setFitHeight(81);
+		app1Viewer.setFitWidth(81);
 		Button app1Button = new Button();
 		app1Button.setGraphic(app1Viewer);
 		app1Button.setStyle("-fx-background-color: transparent;");
@@ -123,16 +123,20 @@ public class JavaFX extends Application {
 			primaryStage.setScene(weatherAppScene);
 		});
 
-		ImageView app2Viewer = new ImageView("https://stardewvalleywiki.com/mediawiki/images/thumb/c/cd/Advanced_Options_Button.png/36px-Advanced_Options_Button.png");
-		app2Viewer.setFitHeight(54);
-		app2Viewer.setFitWidth(54);
+		FileInputStream app2FileName = new FileInputStream("Background/icons8-setting-100.png");
+		Image app2Icon = new Image(app2FileName);
+		ImageView app2Viewer = new ImageView(app2Icon);
+		app2Viewer.setFitHeight(81);
+		app2Viewer.setFitWidth(81);
 		Button app2Button = new Button();
 		app2Button.setGraphic(app1Viewer);
 		app2Button.setStyle("-fx-background-color: transparent;");
 
-		ImageView app3Viewer = new ImageView("https://stardewvalleywiki.com/mediawiki/images/a/a5/Stardrop.png");
-		app3Viewer.setFitHeight(54);
-		app3Viewer.setFitWidth(54);
+		FileInputStream app3FileName = new FileInputStream("Background/icons8-developer-100.png");
+		Image app3Icon = new Image(app3FileName);
+		ImageView app3Viewer = new ImageView(app3Icon);
+		app3Viewer.setFitHeight(81);
+		app3Viewer.setFitWidth(81);
 		Button app3Button = new Button();
 		app3Button.setGraphic(app1Viewer);
 		app3Button.setStyle("-fx-background-color: transparent;");
@@ -277,26 +281,31 @@ public class JavaFX extends Application {
 		VBox windArea = new VBox(windTitle, windDescription);
 		windArea.setAlignment(Pos.CENTER);
 
+		ImageView predictIcon = new ImageView("https://img1.picmix.com/output/stamp/normal/0/8/4/1/2231480_8738c.gif");
+		predictIcon.setFitHeight(54);
+		predictIcon.setFitWidth(54);
+
+		Button predictSceneButton = new Button();
+		predictSceneButton.setGraphic(predictIcon);
+		predictSceneButton.setStyle("-fx-background-color: transparent;");
+		predictSceneButton.setOnAction(event -> {
+			primaryStage.setScene(weather3DPage);
+		});
+
 		ImageView homeIcon = new ImageView("https://img1.picmix.com/output/stamp/normal/0/8/4/1/2231480_8738c.gif");
 		homeIcon.setFitHeight(54);
 		homeIcon.setFitWidth(54);
 		Button homeButton = new Button();
 		homeButton.setGraphic(homeIcon);
-		//homeButton.setStyle("-fx-background-color: transparent;");
-		homeButton.setStyle("-fx-background-color: rgba(255, 255, 255, 0.3); -fx-border-color: black;");
+		homeButton.setStyle("-fx-background-color: transparent;");
 		homeButton.setOnAction(event -> {
 			updateDateTime();
 			primaryStage.setScene(homeScene);
 		});
+
 		homeButton.toFront();
-		Button predictSceneButton = new Button();
-		predictSceneButton.setGraphic(homeIcon);
-		predictSceneButton.setStyle("-fx-background-color: transparent;");
-		predictSceneButton.setOnAction(event -> {
-			primaryStage.setScene(weather3DPage);
-		});
 		// buttons in main weather page
-		HBox bottomContainer = new HBox(50,homeButton,predictSceneButton);
+		HBox bottomContainer = new HBox(homeButton, predictSceneButton);
 		bottomContainer.setAlignment(Pos.BOTTOM_RIGHT);
 		bottomContainer.setSpacing(20);
 		bottomContainer.setPadding(new Insets(10, 10, 10, 10));
