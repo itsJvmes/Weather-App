@@ -281,7 +281,7 @@ public class JavaFX extends Application {
 		VBox windArea = new VBox(windTitle, windDescription);
 		windArea.setAlignment(Pos.CENTER);
 
-		ImageView predictIcon = new ImageView("https://img1.picmix.com/output/stamp/normal/0/8/4/1/2231480_8738c.gif");
+		ImageView predictIcon = new ImageView("https://cdnl.iconscout.com/lottie/premium/thumb/sun-and-rain-6634621-5576469.gif");
 		predictIcon.setFitHeight(54);
 		predictIcon.setFitWidth(54);
 
