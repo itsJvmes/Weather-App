@@ -53,7 +53,10 @@ public class JavaFX extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		primaryStage.setTitle("Weather App");
-		forecast = WeatherAPI.getForecast("LOT",77,70);
+		GridInfo gridInfo = MyWeatherAPI.convertLatLonToGrid("41.8832","-87.6324");
+		//forecast = WeatherAPI.getForecast("LOT",77,70);
+		forecast = WeatherAPI.getForecast(gridInfo.region,gridInfo.gridX, gridInfo.gridY);
+		//System.out.println(gridInfo.city+", "+gridInfo.state+ " at "+gridInfo.gridX+" "+gridInfo.gridY);
 		if (forecast == null){
 			throw new RuntimeException("Forecast did not load");
 		}
