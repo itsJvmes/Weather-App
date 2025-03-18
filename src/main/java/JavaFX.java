@@ -25,13 +25,13 @@ public class JavaFX extends Application {
 	DropShadow dropShadow = new DropShadow();
 	int swapBGcount = 0;
 	String changeBGIcon = "https://img.icons8.com/?size=100&id=89962&format=png&color=000000";
-	String homeIcon = "https://img.icons8.com/?size=100&id=86527&format=png&color=000000";
+	String home3DIcon = "https://img.icons8.com/?size=100&id=86527&format=png&color=000000";
 	String tempIcon = "https://img.icons8.com/?size=100&id=648&format=png&color=000000";
 	String rainIcon = "https://img.icons8.com/?size=100&id=656&format=png&color=000000";
 	String windIcon = "https://img.icons8.com/?size=100&id=74197&format=png&color=000000";
 	String weatherIcon  = "https://img.icons8.com/?size=100&id=Zb9EIGS9RBLh&format=png&color=000000";
 	String directionIcon = "https://img.icons8.com/?size=100&id=9672&format=png&color=000000";
-	Button homeButton, changeBG, windSwapButton;
+	Button home3DButton, changeBG, windSwapButton;
 	private boolean isWindScene = false;
 	TextField tempDay1,probDay1,tempDay1Night,probDay1Night, tempDay2, probDay2,tempDay2Night,probDay2Night, tempDay3, probDay3,tempDay3Night, probDay3Night;
 	HBox hDay1, hDay1Night, hDay2, hDay2Night, hDay3, hDay3Night, hInteraction;
@@ -93,7 +93,7 @@ public class JavaFX extends Application {
             }
             predictionPageView.setImage(newBackground);
 		});
-		homeButton = createIconButton(homeIcon);
+		home3DButton = createIconButton(home3DIcon);
 		windSwapButton = createIconButton(windIcon);
 		windSwapButton.setOnAction(event -> {
 			if (!isWindScene) {
@@ -190,7 +190,7 @@ public class JavaFX extends Application {
 
 		vPredict = new VBox(10, hDay1, hDay1Night, hDay2, hDay2Night, hDay3, hDay3Night);
 		vPredict.setStyle("-fx-alignment: center;");
-		hInteraction = new HBox(90, changeBG, homeButton, windSwapButton);
+		hInteraction = new HBox(90, changeBG, home3DButton, windSwapButton);
 
 
 		VBox layoutPrediction = new VBox(210, vPredict, hInteraction);
