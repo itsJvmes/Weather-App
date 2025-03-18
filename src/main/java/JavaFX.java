@@ -78,11 +78,11 @@ public class JavaFX extends Application {
 		date.setAlignment(Pos.CENTER);
 		date.setStyle(
 				"-fx-font-size: 18; " +
-				"-fx-text-alignment: center; " +
-				"-fx-background-color: transparent; " +
-				"-fx-control-inner-background: transparent; " +
-				"-fx-border-color: transparent; " +
-				"-fx-text-fill: black;"
+						"-fx-text-alignment: center; " +
+						"-fx-background-color: transparent; " +
+						"-fx-control-inner-background: transparent; " +
+						"-fx-border-color: transparent; " +
+						"-fx-text-fill: black;"
 		);
 
 		// Create time display
@@ -94,11 +94,11 @@ public class JavaFX extends Application {
 		time.setAlignment(Pos.CENTER);
 		time.setStyle(
 				"-fx-font-size: 18; " +
-				"-fx-text-alignment: center; " +
-				"-fx-background-color: transparent; " +
-				"-fx-control-inner-background: transparent; " +
-				"-fx-border-color: transparent; " +
-				"-fx-text-fill: black;"
+						"-fx-text-alignment: center; " +
+						"-fx-background-color: transparent; " +
+						"-fx-control-inner-background: transparent; " +
+						"-fx-border-color: transparent; " +
+						"-fx-text-fill: black;"
 		);
 
 		// Load Junimo animated icons
@@ -204,12 +204,12 @@ public class JavaFX extends Application {
 
 		location.setEffect(dropShadow);
 		location.setStyle(
-			"-fx-font-size: 24; " +
-			"-fx-text-alignment: center; " +
-			"-fx-background-color: transparent; " +
-			"-fx-control-inner-background: transparent; " +
-			"-fx-border-color: transparent; " +
-			"-fx-text-fill: black;"
+				"-fx-font-size: 24; " +
+						"-fx-text-alignment: center; " +
+						"-fx-background-color: transparent; " +
+						"-fx-control-inner-background: transparent; " +
+						"-fx-border-color: transparent; " +
+						"-fx-text-fill: black;"
 		);
 
 		HBox locationArea = new HBox(iconLocation1, location, iconLocation2);
@@ -224,12 +224,12 @@ public class JavaFX extends Application {
 		degree.setEditable(false);
 		degree.setAlignment(Pos.CENTER);
 		degree.setStyle(
-			"-fx-font-size: 48; " +
-			"-fx-text-alignment: center; " +
-			"-fx-background-color: transparent; " +
-			"-fx-control-inner-background: transparent; " +
-			"-fx-border-color: transparent; " +
-			"-fx-text-fill: black;"
+				"-fx-font-size: 48; " +
+						"-fx-text-alignment: center; " +
+						"-fx-background-color: transparent; " +
+						"-fx-control-inner-background: transparent; " +
+						"-fx-border-color: transparent; " +
+						"-fx-text-fill: black;"
 		);
 
 		HBox degreeArea = new HBox(degree);
@@ -241,12 +241,12 @@ public class JavaFX extends Application {
 		shortDescription.setEditable(false);
 		shortDescription.setAlignment(Pos.CENTER);
 		shortDescription.setStyle(
-			"-fx-font-size: 18; " +
-			"-fx-text-alignment: center; " +
-			"-fx-background-color: transparent; " +
-			"-fx-control-inner-background: transparent; " +
-			"-fx-border-color: transparent; " +
-			"-fx-text-fill: black;"
+				"-fx-font-size: 18; " +
+						"-fx-text-alignment: center; " +
+						"-fx-background-color: transparent; " +
+						"-fx-control-inner-background: transparent; " +
+						"-fx-border-color: transparent; " +
+						"-fx-text-fill: black;"
 		);
 
 		TextField windTitle = new TextField("Wind Speed: ");
@@ -255,13 +255,13 @@ public class JavaFX extends Application {
 		windTitle.setAlignment(Pos.CENTER);
 		windTitle.setEditable(false);
 		windTitle.setStyle(
-			"-fx-font-size: 18; " +
-			"-fx-text-alignment: center; " +
-			"-fx-background-color: transparent; " +
-			"-fx-control-inner-background: transparent; " +
-			"-fx-border-color: transparent; " +
-			"-fx-text-fill: black;" +
-			"-fx-font-weight: bold;"
+				"-fx-font-size: 18; " +
+						"-fx-text-alignment: center; " +
+						"-fx-background-color: transparent; " +
+						"-fx-control-inner-background: transparent; " +
+						"-fx-border-color: transparent; " +
+						"-fx-text-fill: black;" +
+						"-fx-font-weight: bold;"
 		);
 
 		TextField windDescription = new TextField(forecast.getFirst().windSpeed);
@@ -270,12 +270,12 @@ public class JavaFX extends Application {
 		windDescription.setAlignment(Pos.CENTER);
 		windDescription.setEditable(false);
 		windDescription.setStyle(
-			"-fx-font-size: 18; " +
-			"-fx-text-alignment: center; " +
-			"-fx-background-color: transparent; " +
-			"-fx-control-inner-background: transparent; " +
-			"-fx-border-color: transparent; " +
-			"-fx-text-fill: black;"
+				"-fx-font-size: 18; " +
+						"-fx-text-alignment: center; " +
+						"-fx-background-color: transparent; " +
+						"-fx-control-inner-background: transparent; " +
+						"-fx-border-color: transparent; " +
+						"-fx-text-fill: black;"
 		);
 
 		VBox windArea = new VBox(windTitle, windDescription);
