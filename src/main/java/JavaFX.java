@@ -51,8 +51,8 @@ public class JavaFX extends Application {
 
 
 		FileInputStream wallpaperPredictionPage = new FileInputStream("Background/Summer/Home - Summer dawn.jpg");
-		Image wallpaper = new Image(wallpaperPredictionPage);
-		ImageView predictionPageView = new ImageView(wallpaper);
+		Image wallpaperPrediction = new Image(wallpaperPredictionPage);
+		ImageView predictionPageView = new ImageView(wallpaperPrediction);
 		predictionPageView.setFitWidth(374);
 		predictionPageView.setFitHeight(810);
 
