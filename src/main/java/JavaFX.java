@@ -226,7 +226,8 @@ public class JavaFX extends Application {
 		searchButton.setOnAction(event -> {
 			gridInfo = MyWeatherAPI.convertLatLonToGrid(latOption.getText(), lonOption.getText());
 			if (gridInfo == null) {
-				locationField.setPromptText("Location not found");
+				locationField.clear();
+				locationField.setText("Location not found");
 			}
 			else{
 				forecast = WeatherAPI.getForecast(gridInfo.region, gridInfo.gridX, gridInfo.gridY);
