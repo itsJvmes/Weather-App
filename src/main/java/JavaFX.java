@@ -28,12 +28,12 @@ public class JavaFX extends Application {
 	ArrayList<Period> forecast;
 
 	// Home page and main weather page
-	TextField degreeField, lonOption, latOption, locationField, currLocation;
-	Boolean unitF = true;
+	TextField degreeField, lonOption, latOption, locationField, currLocation,mainWeatherLocation, shortDescription,windTitle,windDescription;
+	Boolean unitToC = true;
 	Button settingButton, searchButton, unitField;
 	SimpleDateFormat currDate, currTime;
 	Date now;
-	TextField date,time,degree;
+	TextField date,time, mainWeatherDegree;
 	DropShadow dropShadow = new DropShadow();
 	Scene homeScene, settingScene, weatherAppScene;
 
@@ -185,7 +185,7 @@ public class JavaFX extends Application {
 		// Setting Screen
 
 		unitField = new Button("Change Unit ");
-		unitField.setStyle("-fx-background-color: transparent;");
+		//unitField.setStyle("-fx-background-color: transparent;");
 		unitField.setOnAction(event -> {
 			if (degreeField.getText().equals("Fahrenheit")) {
 				degreeField.setText("Celsius");
@@ -225,8 +225,14 @@ public class JavaFX extends Application {
 		searchButton.setAlignment(Pos.CENTER);
 		searchButton.setOnAction(event -> {
 			gridInfo = MyWeatherAPI.convertLatLonToGrid(latOption.getText(), lonOption.getText());
-			forecast = WeatherAPI.getForecast(gridInfo.region, gridInfo.gridX, gridInfo.gridY);
-			locationField.setText(gridInfo.city + ", " + gridInfo.state);
+			if (gridInfo == null) {
+				locationField.setPromptText("Location not found");
+			}
+			else{
+				forecast = WeatherAPI.getForecast(gridInfo.region, gridInfo.gridX, gridInfo.gridY);
+				locationField.setText(gridInfo.city + ", " + gridInfo.state);
+				updateWeatherOnLocation();
+			}
 		});
 
 		currLocation = new TextField();
@@ -271,15 +277,15 @@ public class JavaFX extends Application {
 		iconLocation2.setFitHeight(30);
 		iconLocation2.setFitWidth(30);
 
-		TextField location = new TextField("Chicago, IL");
-		location.setPrefSize(195, 60);
-		location.setMinSize(195, 60);
-		location.setMaxSize(195, 60);
-		location.setEditable(false);
-		location.setAlignment(Pos.CENTER);
+		mainWeatherLocation = new TextField("Chicago, IL");
+		mainWeatherLocation.setPrefSize(195, 60);
+		mainWeatherLocation.setMinSize(195, 60);
+		mainWeatherLocation.setMaxSize(195, 60);
+		mainWeatherLocation.setEditable(false);
+		mainWeatherLocation.setAlignment(Pos.CENTER);
 
-		location.setEffect(dropShadow);
-		location.setStyle(
+		mainWeatherLocation.setEffect(dropShadow);
+		mainWeatherLocation.setStyle(
 				"-fx-font-size: 24; " +
 						"-fx-text-alignment: center; " +
 						"-fx-background-color: transparent; " +
@@ -288,18 +294,18 @@ public class JavaFX extends Application {
 						"-fx-text-fill: black;"
 		);
 
-		HBox locationArea = new HBox(iconLocation1, location, iconLocation2);
+		HBox locationArea = new HBox(iconLocation1, mainWeatherLocation, iconLocation2);
 		locationArea.setAlignment(Pos.CENTER);
 
-		degree = new TextField();
-		degree.setText(forecast.getFirst().temperature + "°" + forecast.getFirst().temperatureUnit);
-		degree.setEffect(dropShadow);
-		degree.setPrefSize(195, 80);
-		degree.setMinSize(195, 80);
-		degree.setMaxSize(195, 80);
-		degree.setEditable(false);
-		degree.setAlignment(Pos.CENTER);
-		degree.setStyle(
+		mainWeatherDegree = new TextField();
+		mainWeatherDegree.setText(forecast.getFirst().temperature + "°" + forecast.getFirst().temperatureUnit);
+		mainWeatherDegree.setEffect(dropShadow);
+		mainWeatherDegree.setPrefSize(195, 80);
+		mainWeatherDegree.setMinSize(195, 80);
+		mainWeatherDegree.setMaxSize(195, 80);
+		mainWeatherDegree.setEditable(false);
+		mainWeatherDegree.setAlignment(Pos.CENTER);
+		mainWeatherDegree.setStyle(
 				"-fx-font-size: 48; " +
 						"-fx-text-alignment: center; " +
 						"-fx-background-color: transparent; " +
@@ -308,10 +314,10 @@ public class JavaFX extends Application {
 						"-fx-text-fill: black;"
 		);
 
-		HBox degreeArea = new HBox(degree);
+		HBox degreeArea = new HBox(mainWeatherDegree);
 		degreeArea.setAlignment(Pos.CENTER);
 
-		TextField shortDescription = new TextField(forecast.getFirst().shortForecast);
+		shortDescription = new TextField(forecast.getFirst().shortForecast);
 		shortDescription.setEffect(dropShadow);
 		shortDescription.setPrefWidth(60);
 		shortDescription.setEditable(false);
@@ -325,7 +331,7 @@ public class JavaFX extends Application {
 						"-fx-text-fill: black;"
 		);
 
-		TextField windTitle = new TextField("Wind Speed: ");
+		windTitle = new TextField("Wind Speed: ");
 		windTitle.setEffect(dropShadow);
 		windTitle.setPrefSize(54,54);
 		windTitle.setAlignment(Pos.CENTER);
@@ -340,7 +346,7 @@ public class JavaFX extends Application {
 						"-fx-font-weight: bold;"
 		);
 
-		TextField windDescription = new TextField(forecast.getFirst().windSpeed);
+		windDescription = new TextField(forecast.getFirst().windSpeed);
 		windDescription.setEffect(dropShadow);
 		windDescription.setPrefSize(54,54);
 		windDescription.setAlignment(Pos.CENTER);
@@ -485,22 +491,13 @@ public class JavaFX extends Application {
 				windSwapButton.setGraphic(iconView);
 			} else {
 				// Switch back to normal mode
-				tempDay1.setText(forecast.get(1).temperature + "°" + forecast.get(2).temperatureUnit);
+				unitToC=!unitToC;
+				changeUnit();
 				probDay1.setText(forecast.get(1).probabilityOfPrecipitation.value + "%");
-
-				tempDay1Night.setText(forecast.get(2).temperature + "°" + forecast.get(3).temperatureUnit);
 				probDay1Night.setText(forecast.get(2).probabilityOfPrecipitation.value + "%");
-
-				tempDay2.setText(forecast.get(3).temperature + "°" + forecast.get(4).temperatureUnit);
 				probDay2.setText(forecast.get(3).probabilityOfPrecipitation.value + "%");
-
-				tempDay2Night.setText(forecast.get(4).temperature + "°" + forecast.get(5).temperatureUnit);
 				probDay2Night.setText(forecast.get(4).probabilityOfPrecipitation.value + "%");
-
-				tempDay3.setText(forecast.get(5).temperature + "°" + forecast.get(6).temperatureUnit);
 				probDay3.setText(forecast.get(5).probabilityOfPrecipitation.value + "%");
-
-				tempDay3Night.setText(forecast.get(6).temperature + "°" + forecast.get(7).temperatureUnit);
 				probDay3Night.setText(forecast.get(6).probabilityOfPrecipitation.value + "%");
 
 				// Update icons for all fields
@@ -580,6 +577,21 @@ public class JavaFX extends Application {
 		date.setText(currDate.format(now));
 		time.setText(currTime.format(now));
 	}
+	private void updateWeatherOnLocation(){
+		unitToC=!unitToC;
+		changeUnit();
+		probDay1.setText(String.valueOf(forecast.get(1).probabilityOfPrecipitation.value)+"%");
+		probDay1Night.setText(String.valueOf(forecast.get(2).probabilityOfPrecipitation.value)+"%");
+		probDay2.setText(String.valueOf(forecast.get(3).probabilityOfPrecipitation.value)+"%");
+		probDay2Night.setText(String.valueOf(forecast.get(4).probabilityOfPrecipitation.value)+"%");
+		probDay3.setText(String.valueOf(forecast.get(5).probabilityOfPrecipitation.value)+"%");
+		probDay3Night.setText(String.valueOf(forecast.get(6).probabilityOfPrecipitation.value)+"%");
+		mainWeatherLocation.setText(gridInfo.city+", "+ gridInfo.state);
+		shortDescription.setText(forecast.get(0).shortForecast);
+		windDescription.setText(forecast.get(0).windSpeed);
+
+	}
+
 	private String swapBackGround(){
 		String[] links={
 				"Background/Autumn/Home - Autumn dawn.jpg",
@@ -698,8 +710,8 @@ public class JavaFX extends Application {
 		return ((temperatureF - 32) * (5.0 / 9.0));
 	}
 	private void changeUnit() {
-		if (unitF) {
-			degree.setText(String.valueOf(Math.round(formularToC(forecast.get(0).temperature)))+"°C");
+		if (unitToC) {
+			mainWeatherDegree.setText(String.valueOf(Math.round(formularToC(forecast.get(0).temperature)))+"°C");
 			tempDay1.setText(String.valueOf(Math.round(formularToC(forecast.get(1).temperature)))+"°C");
 			tempDay1Night.setText(String.valueOf(Math.round(formularToC(forecast.get(2).temperature)))+"°C");
 			tempDay2.setText(String.valueOf(Math.round(formularToC(forecast.get(3).temperature)))+"°C");
@@ -707,7 +719,7 @@ public class JavaFX extends Application {
 			tempDay3.setText(String.valueOf(Math.round(formularToC(forecast.get(5).temperature)))+"°C");
 			tempDay3Night.setText(String.valueOf(Math.round(formularToC(forecast.get(6).temperature)))+"°C");
 		} else {
-			degree.setText(forecast.getFirst().temperature + "°F");
+			mainWeatherDegree.setText(forecast.getFirst().temperature + "°F");
 			tempDay1.setText(forecast.get(1).temperature + "°F");
 			tempDay1Night.setText(forecast.get(2).temperature + "°F");
 			tempDay2.setText(forecast.get(3).temperature + "°F");
@@ -716,7 +728,7 @@ public class JavaFX extends Application {
 			tempDay3Night.setText(forecast.get(6).temperature + "°F");
 
 		}
-		unitF=!unitF;
+		unitToC =!unitToC;
 	}
 
 	private String iconBasedOnShortDesc(String shortDesc) {
