@@ -1,5 +1,6 @@
 import javafx.application.Application;
 
+import java.text.DecimalFormat;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -224,6 +225,16 @@ public class JavaFX extends Application {
 		searchButton= new Button("Search");
 		searchButton.setAlignment(Pos.CENTER);
 		searchButton.setOnAction(event -> {
+//			double lat = Double.parseDouble(latOption.getText());
+//			double lon = Math.abs(Double.parseDouble(lonOption.getText()))*-1;
+//			latOption.setText(String.format("%.4f", lat));
+//			lonOption.setText(String.format("%.4f", lon));
+			double lat = Double.parseDouble(latOption.getText());
+			double lon = Math.abs(Double.parseDouble(lonOption.getText())) * -1;
+
+			latOption.setText(formatDecimal(lat));
+			lonOption.setText(formatDecimal(lon));
+
 			gridInfo = MyWeatherAPI.convertLatLonToGrid(latOption.getText(), lonOption.getText());
 			if (gridInfo == null) {
 				locationField.clear();
@@ -751,4 +762,9 @@ public class JavaFX extends Application {
 			return "https://img.icons8.com/?size=100&id=67538&format=png&color=000000";
 		}
 	}
+	private String formatDecimal(double value) {
+		DecimalFormat df = new DecimalFormat("#.####");
+		return df.format(value);
+	}
+
 }
