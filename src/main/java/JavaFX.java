@@ -228,24 +228,6 @@ public class JavaFX extends Application {
 		searchButton= new Button("Search");
 		searchButton.setAlignment(Pos.CENTER);
 		searchButton.setOnAction(event -> {
-//			searchButton.setText("Searching...");
-//			double lat = Double.parseDouble(latOption.getText());
-//			double lon = Math.abs(Double.parseDouble(lonOption.getText())) * -1;
-//
-//			latOption.setText(formatDecimal(lat));
-//			lonOption.setText(formatDecimal(lon));
-//
-//			gridInfo = MyWeatherAPI.convertLatLonToGrid(latOption.getText(), lonOption.getText());
-//			if (gridInfo == null) {
-//				locationField.clear();
-//				locationField.setText("Location not found");
-//			}
-//			else{
-//				forecast = WeatherAPI.getForecast(gridInfo.region, gridInfo.gridX, gridInfo.gridY);
-//				locationField.setText(gridInfo.city + ", " + gridInfo.state);
-//				updateWeatherOnLocation();
-//			}
-//			searchButton.setText("Search");
 			searchButton.setText("Searching...");
 			searchButton.setDisable(true);
 			locationField.setText(""); // Clear previous result
