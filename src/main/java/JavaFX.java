@@ -230,12 +230,14 @@ public class JavaFX extends Application {
 		});
 
 		currLocation = new TextField();
+		currLocation.setEditable(false);
 		currLocation.setText("Current Location: ");
 		currLocation.setAlignment(Pos.CENTER);
 		currLocation.setStyle("-fx-background-color: transparent;");
 
 		locationField = new TextField();
-		locationField.setText("Location: ");
+		locationField.setEditable(false);
+		locationField.setText("Chicago, IL");
 		locationField.setAlignment(Pos.CENTER);
 		locationField.setStyle("-fx-background-color: transparent;");
 
