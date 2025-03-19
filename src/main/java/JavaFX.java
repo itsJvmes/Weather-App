@@ -1,6 +1,9 @@
 import javafx.application.Application;
 
 import java.text.DecimalFormat;
+
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -225,26 +228,69 @@ public class JavaFX extends Application {
 		searchButton= new Button("Search");
 		searchButton.setAlignment(Pos.CENTER);
 		searchButton.setOnAction(event -> {
+//			searchButton.setText("Searching...");
 //			double lat = Double.parseDouble(latOption.getText());
-//			double lon = Math.abs(Double.parseDouble(lonOption.getText()))*-1;
-//			latOption.setText(String.format("%.4f", lat));
-//			lonOption.setText(String.format("%.4f", lon));
-			double lat = Double.parseDouble(latOption.getText());
-			double lon = Math.abs(Double.parseDouble(lonOption.getText())) * -1;
+//			double lon = Math.abs(Double.parseDouble(lonOption.getText())) * -1;
+//
+//			latOption.setText(formatDecimal(lat));
+//			lonOption.setText(formatDecimal(lon));
+//
+//			gridInfo = MyWeatherAPI.convertLatLonToGrid(latOption.getText(), lonOption.getText());
+//			if (gridInfo == null) {
+//				locationField.clear();
+//				locationField.setText("Location not found");
+//			}
+//			else{
+//				forecast = WeatherAPI.getForecast(gridInfo.region, gridInfo.gridX, gridInfo.gridY);
+//				locationField.setText(gridInfo.city + ", " + gridInfo.state);
+//				updateWeatherOnLocation();
+//			}
+//			searchButton.setText("Search");
+			searchButton.setText("Searching...");
+			searchButton.setDisable(true);
+			locationField.setText(""); // Clear previous result
 
-			latOption.setText(formatDecimal(lat));
-			lonOption.setText(formatDecimal(lon));
+			Task<Void> task = new Task<>() {
+				@Override
+				protected Void call() {
+					try {
+						double lat = Double.parseDouble(latOption.getText());
+						double lon = Math.abs(Double.parseDouble(lonOption.getText())) * -1;
 
-			gridInfo = MyWeatherAPI.convertLatLonToGrid(latOption.getText(), lonOption.getText());
-			if (gridInfo == null) {
-				locationField.clear();
-				locationField.setText("Location not found");
-			}
-			else{
-				forecast = WeatherAPI.getForecast(gridInfo.region, gridInfo.gridX, gridInfo.gridY);
-				locationField.setText(gridInfo.city + ", " + gridInfo.state);
-				updateWeatherOnLocation();
-			}
+						latOption.setText(formatDecimal(lat));
+						lonOption.setText(formatDecimal(lon));
+
+						// Print debug info
+						System.out.println("Fetching grid info for: " + lat + ", " + lon);
+
+						gridInfo = MyWeatherAPI.convertLatLonToGrid(latOption.getText(), lonOption.getText());
+
+						Platform.runLater(() -> {
+							if (gridInfo == null) {
+								System.err.println("Grid info is null. API may have failed.");
+								locationField.setText("Location not found");
+							} else {
+								System.out.println("Grid info found: " + gridInfo.region);
+								forecast = WeatherAPI.getForecast(gridInfo.region, gridInfo.gridX, gridInfo.gridY);
+								locationField.setText(gridInfo.city + ", " + gridInfo.state);
+								updateWeatherOnLocation();
+							}
+							searchButton.setText("Search");
+							searchButton.setDisable(false);
+						});
+					} catch (Exception e) {
+						e.printStackTrace();
+						Platform.runLater(() -> {
+							locationField.setText("Invalid input");
+							searchButton.setText("Search");
+							searchButton.setDisable(false);
+						});
+					}
+					return null;
+				}
+			};
+
+			new Thread(task).start();
 		});
 
 		currLocation = new TextField();
