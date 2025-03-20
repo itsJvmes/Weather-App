@@ -6,7 +6,6 @@ import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.GaussianBlur;
@@ -63,9 +62,7 @@ public class JavaFX extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		primaryStage.setTitle("Weather App");
 		gridInfo = MyWeatherAPI.convertLatLonToGrid("41.8832","-87.6324");
-		//forecast = WeatherAPI.getForecast("LOT",77,70);
 		forecast = WeatherAPI.getForecast(gridInfo.region,gridInfo.gridX, gridInfo.gridY);
-		//System.out.println(gridInfo.city+", "+gridInfo.state+ " at "+gridInfo.gridX+" "+gridInfo.gridY);
 		if (forecast == null){
 			throw new RuntimeException("Forecast did not load");
 		}
@@ -188,7 +185,6 @@ public class JavaFX extends Application {
 		fullscreen.getChildren().addAll(wallpaperView, borderPane);
 
 		// Setting Screen
-
 		FileInputStream settingFileName = new FileInputStream("Background/full-moon-in-stardew-valley-j9tc9l0xk0xm76r0.jpg");
 		Image settingWallpaper = new Image(settingFileName);
 		ImageView settingWallpaperViewer = new ImageView(settingWallpaper);
@@ -198,7 +194,6 @@ public class JavaFX extends Application {
 		settingWallpaperViewer.setFitHeight(810);
 
 		unitField = new Button("Change Unit ");
-		//unitField.setStyle("-fx-background-color: transparent;");
 		unitField.setOnAction(event -> {
 			if (degreeField.getText().equals("Fahrenheit")) {
 				degreeField.setText("Celsius");
@@ -233,23 +228,18 @@ public class JavaFX extends Application {
 		searchButton.setOnAction(event -> {
 			searchButton.setText("Searching...");
 			searchButton.setDisable(true);
-			locationField.setText(""); // Clear previous result
-
+			locationField.setText("");
 			Task<Void> task = new Task<>() {
 				@Override
 				protected Void call() {
 					try {
 						double lat = Double.parseDouble(latOption.getText());
 						double lon = Math.abs(Double.parseDouble(lonOption.getText())) * -1;
-
 						latOption.setText(formatDecimal(lat));
 						lonOption.setText(formatDecimal(lon));
-
 						// Print debug info
 						System.out.println("Fetching grid info for: " + lat + ", " + lon);
-
 						gridInfo = MyWeatherAPI.convertLatLonToGrid(latOption.getText(), lonOption.getText());
-
 						Platform.runLater(() -> {
 							if (gridInfo == null) {
 								System.err.println("Grid info is null. API may have failed.");
@@ -279,7 +269,6 @@ public class JavaFX extends Application {
 					return null;
 				}
 			};
-
 			new Thread(task).start();
 		});
 
@@ -308,21 +297,16 @@ public class JavaFX extends Application {
 
 		HBox container = new HBox(homeSettingButton);
 		container.setAlignment(Pos.BOTTOM_CENTER);
-
 		VBox settingBox = new VBox(30, unitArea, CoordArea, searchButton, currLocation, locationField);
 		settingBox.setAlignment(Pos.CENTER);
-
 		VBox settingLayout = new VBox(settingBox, container);
 		settingLayout.setAlignment(Pos.TOP_CENTER); // Start from top
-
 		VBox.setVgrow(settingBox, Priority.ALWAYS); // Push settingBox to the middle
 		container.setAlignment(Pos.BOTTOM_CENTER); // Keep container at bottom
-
 		StackPane settingPane = new StackPane();
 		settingPane.getChildren().add(settingWallpaperViewer);
 		settingPane.getChildren().add(settingLayout);
 		settingPane.setAlignment(Pos.CENTER);
-
 		settingScene = new Scene(settingPane, 374, 810);
 
 		// WEATHER MAIN SCREEN
@@ -349,7 +333,6 @@ public class JavaFX extends Application {
 		mainWeatherLocation.setMaxSize(195, 60);
 		mainWeatherLocation.setEditable(false);
 		mainWeatherLocation.setAlignment(Pos.CENTER);
-
 		mainWeatherLocation.setEffect(dropShadow);
 		mainWeatherLocation.setStyle(
 				"-fx-font-size: 24; " +
@@ -475,8 +458,7 @@ public class JavaFX extends Application {
 		weatherAppScene = new Scene(weatherApp, 374, 810);
 
 
-// PREDICT WEATHER IN NEXT 3 DAYS PAGE
-
+		// PREDICT WEATHER IN NEXT 3 DAYS PAGE
 		FileInputStream wallpaperPredictionPage = new FileInputStream("Background/Summer/Home - Summer dawn.jpg");
 		Image wallpaperPrediction = new Image(wallpaperPredictionPage);
 		ImageView predictionPageView = new ImageView(wallpaperPrediction);
@@ -635,7 +617,7 @@ public class JavaFX extends Application {
 		layoutPredictionPane.getChildren().addAll(predictionPageView, layoutPrediction, hInteraction);
 
 		weather3DPage = new Scene(layoutPredictionPane, 374, 810);
-// END PREDICT WEATHER IN NEXT 3 DAYS PAGE
+		// END PREDICT WEATHER IN NEXT 3 DAYS PAGE
 
 		// Create and show scene
 		homeScene = new Scene(fullscreen, 374, 810);
@@ -697,18 +679,19 @@ public class JavaFX extends Application {
 		}
 		return links[swapBGcount];
 	}
-
+	// this function set the icon next to the text field in 3 days weather prediction
 	private HBox createTextFieldWithIcon(TextField probDay, String link) {
 		// Load the icon
 		ImageView Icon = new ImageView(new Image(link));
-		Icon.setFitHeight(25); // Adjust size as needed
+		Icon.setFitHeight(25);
 		Icon.setFitWidth(25);
 		// Create an HBox to contain the icon and text field
-		HBox hBox = new HBox(Icon, probDay); // 5px spacing between icon and text field
-		hBox.setAlignment(Pos.CENTER_LEFT); // Align properly
+		HBox hBox = new HBox(Icon, probDay);
+		hBox.setAlignment(Pos.CENTER_LEFT);
 
 		return hBox;
 	}
+	// function to create text field with transparent blackground
 	private TextField createTextField(String text, String alignment, int fontSize, double width, double height) {
 		TextField textField = new TextField(text);
 		textField.setEditable(false);
@@ -729,13 +712,14 @@ public class JavaFX extends Application {
 			case "right":
 				textField.setStyle(textField.getStyle() + "-fx-alignment: center-right;");
 				break;
-			default: // Default to left
+			default:
 				textField.setStyle(textField.getStyle() + "-fx-alignment: center-left;");
 				break;
 		}
 		textField.setEffect(dropShadow);
 		return textField;
 	}
+	// create text field with blurred background
 	private StackPane createBlurredTextField(String text,String alignment, int fontSize, double width, double height) {
 		Region blurredBackground = new Region();
 		blurredBackground.setPrefSize(width, height);
@@ -760,7 +744,7 @@ public class JavaFX extends Application {
 			case "right":
 				textField.setStyle(textField.getStyle() + "-fx-alignment: center-right;");
 				break;
-			default: // Default to left
+			default:
 				textField.setStyle(textField.getStyle() + "-fx-alignment: center-left;");
 				break;
 		}
@@ -771,6 +755,7 @@ public class JavaFX extends Application {
 		stack.setEffect(dropShadow);
 		return stack;
 	}
+	// function create icon with same size
 	private Button createIconButton(String iconUrl) {
 		Button button = new Button();
 		Image icon = new Image(iconUrl);
@@ -781,9 +766,11 @@ public class JavaFX extends Application {
 		button.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
 		return button;
 	}
+	// formylar to convert F to C
 	private double formularToC(int temperatureF){
 		return ((temperatureF - 32) * (5.0 / 9.0));
 	}
+	// Update the temperature unit base on the user choice
 	private void changeUnit() {
 		if (unitToC) {
 			mainWeatherDegree.setText(String.valueOf(Math.round(formularToC(forecast.get(0).temperature)))+"°C");
@@ -801,11 +788,10 @@ public class JavaFX extends Application {
 			tempDay2Night.setText(forecast.get(4).temperature + "°F");
 			tempDay3.setText(forecast.get(5).temperature + "°F");
 			tempDay3Night.setText(forecast.get(6).temperature + "°F");
-
 		}
 		unitToC =!unitToC;
 	}
-
+	// function take the short description to update the icon base on the weather condition
 	private String iconBasedOnShortDesc(String shortDesc) {
 		if (shortDesc.contains("Sunny")) {
 			return "https://img.icons8.com/?size=100&id=67607&format=png&color=000000";
@@ -825,9 +811,9 @@ public class JavaFX extends Application {
 			return "https://img.icons8.com/?size=100&id=67538&format=png&color=000000";
 		}
 	}
+	// function to change the format input for lat and lon. Only take 4 decimals place and no unneeded 0
 	private String formatDecimal(double value) {
 		DecimalFormat df = new DecimalFormat("#.####");
 		return df.format(value);
 	}
-
 }
