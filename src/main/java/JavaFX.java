@@ -287,13 +287,13 @@ public class JavaFX extends Application {
 		currLocation.setEditable(false);
 		currLocation.setText("Current Location: ");
 		currLocation.setAlignment(Pos.CENTER);
-		currLocation.setStyle("-fx-background-color: transparent;");
+		currLocation.setStyle("-fx-background-color: transparent; -fx-text-fill: white;");
 
 		locationField = new TextField();
 		locationField.setEditable(false);
 		locationField.setText("Chicago, IL");
 		locationField.setAlignment(Pos.CENTER);
-		locationField.setStyle("-fx-background-color: transparent;");
+		locationField.setStyle("-fx-background-color: transparent; -fx-text-fill: white;");
 
 		ImageView homeSettingIcon = new ImageView("https://img.icons8.com/?size=100&id=xHeTZeKGjXUD&format=png&color=000000");
 		homeSettingIcon.setFitHeight(54);
