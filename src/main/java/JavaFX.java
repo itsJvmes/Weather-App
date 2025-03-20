@@ -62,7 +62,7 @@ public class JavaFX extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		primaryStage.setTitle("Weather App");
 		gridInfo = MyWeatherAPI.convertLatLonToGrid("41.8832","-87.6324");
-		forecast = WeatherAPI.getForecast(gridInfo.region,gridInfo.gridX, gridInfo.gridY);
+		forecast = MyWeatherAPI.getForecast(gridInfo.region,gridInfo.gridX, gridInfo.gridY);
 		if (forecast == null){
 			throw new RuntimeException("Forecast did not load");
 		}
@@ -246,7 +246,7 @@ public class JavaFX extends Application {
 								locationField.setText("Location not found");
 							} else {
 								System.out.println("Grid info found: " + gridInfo.region);
-								forecast = WeatherAPI.getForecast(gridInfo.region, gridInfo.gridX, gridInfo.gridY);
+								forecast = MyWeatherAPI.getForecast(gridInfo.region, gridInfo.gridX, gridInfo.gridY);
 								if (forecast == null) {
 									locationField.setText("Weather is not available in this location");
 								}
