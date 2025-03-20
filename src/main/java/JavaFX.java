@@ -254,8 +254,14 @@ public class JavaFX extends Application {
 							} else {
 								System.out.println("Grid info found: " + gridInfo.region);
 								forecast = WeatherAPI.getForecast(gridInfo.region, gridInfo.gridX, gridInfo.gridY);
-								locationField.setText(gridInfo.city + ", " + gridInfo.state);
-								updateWeatherOnLocation();
+								if (forecast == null) {
+									locationField.setText("Weather is not available in this location");
+								}
+								else{
+									locationField.setText(gridInfo.city + ", " + gridInfo.state);
+									updateWeatherOnLocation();
+								}
+
 							}
 							searchButton.setText("Search");
 							searchButton.setDisable(false);
