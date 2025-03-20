@@ -189,7 +189,7 @@ public class JavaFX extends Application {
 
 		// Setting Screen
 
-		FileInputStream settingFileName = new FileInputStream("Background/weather_app_wallpaper.png");
+		FileInputStream settingFileName = new FileInputStream("Background/full-moon-in-stardew-valley-j9tc9l0xk0xm76r0.jpg");
 		Image settingWallpaper = new Image(settingFileName);
 		ImageView settingWallpaperViewer = new ImageView(settingWallpaper);
 		settingWallpaperViewer.setX(0);
@@ -257,8 +257,13 @@ public class JavaFX extends Application {
 							} else {
 								System.out.println("Grid info found: " + gridInfo.region);
 								forecast = WeatherAPI.getForecast(gridInfo.region, gridInfo.gridX, gridInfo.gridY);
-								locationField.setText(gridInfo.city + ", " + gridInfo.state);
-								updateWeatherOnLocation();
+								if (forecast == null) {
+									locationField.setText("Weather is not available in this location");
+								}
+								else{
+									locationField.setText(gridInfo.city + ", " + gridInfo.state);
+									updateWeatherOnLocation();
+								}
 							}
 							searchButton.setText("Search");
 							searchButton.setDisable(false);
@@ -304,14 +309,21 @@ public class JavaFX extends Application {
 		HBox container = new HBox(homeSettingButton);
 		container.setAlignment(Pos.BOTTOM_CENTER);
 
-		VBox settingBox = new VBox(30, unitArea, CoordArea, searchButton, currLocation ,locationField);
+		VBox settingBox = new VBox(30, unitArea, CoordArea, searchButton, currLocation, locationField);
 		settingBox.setAlignment(Pos.CENTER);
 
+		VBox settingLayout = new VBox(settingBox, container);
+		settingLayout.setAlignment(Pos.TOP_CENTER); // Start from top
+
+		VBox.setVgrow(settingBox, Priority.ALWAYS); // Push settingBox to the middle
+		container.setAlignment(Pos.BOTTOM_CENTER); // Keep container at bottom
+
 		StackPane settingPane = new StackPane();
-		settingPane.getChildren().addAll(settingWallpaperViewer, settingBox, container);
+		settingPane.getChildren().add(settingWallpaperViewer);
+		settingPane.getChildren().add(settingLayout);
+		settingPane.setAlignment(Pos.CENTER);
 
 		settingScene = new Scene(settingPane, 374, 810);
-
 
 		// WEATHER MAIN SCREEN
 		// Load wallpaper image
