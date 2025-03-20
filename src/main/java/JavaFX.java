@@ -56,6 +56,7 @@ public class JavaFX extends Application {
 	HBox hDay1, hDay1Night, hDay2, hDay2Night, hDay3, hDay3Night, hInteraction;
 	VBox vDay1, vDay1Night, vDay2, vDay2Night, vDay3, vDay3Night, vPredict;
 	Scene weather3DPage;
+
 	public static void main(String[] args) { launch(args); }
 
 	@Override
@@ -188,6 +189,14 @@ public class JavaFX extends Application {
 
 		// Setting Screen
 
+		FileInputStream settingFileName = new FileInputStream("Background/weather_app_wallpaper.png");
+		Image settingWallpaper = new Image(settingFileName);
+		ImageView settingWallpaperViewer = new ImageView(settingWallpaper);
+		settingWallpaperViewer.setX(0);
+		settingWallpaperViewer.setY(0);
+		settingWallpaperViewer.setFitWidth(374);
+		settingWallpaperViewer.setFitHeight(810);
+
 		unitField = new Button("Change Unit ");
 		//unitField.setStyle("-fx-background-color: transparent;");
 		unitField.setOnAction(event -> {
@@ -211,16 +220,10 @@ public class JavaFX extends Application {
 		lonOption = new TextField();
 		lonOption.setPromptText("Enter Longitude");
 		lonOption.setAlignment(Pos.CENTER);
-		lonOption.setPrefSize(120, 120);
-		lonOption.setMaxSize(120, 120);
-		lonOption.setMinSize(120, 120);
 
 		latOption = new TextField();
 		latOption.setPromptText("Enter Latitude");
 		latOption.setAlignment(Pos.CENTER);
-		latOption.setPrefSize(120, 120);
-		latOption.setMaxSize(120, 120);
-		latOption.setMinSize(120, 120);
 
 		HBox CoordArea = new HBox(30, latOption, lonOption);
 		CoordArea.setAlignment(Pos.CENTER);
@@ -287,16 +290,27 @@ public class JavaFX extends Application {
 		locationField.setAlignment(Pos.CENTER);
 		locationField.setStyle("-fx-background-color: transparent;");
 
-		Button homeSettingButton = new Button("Home");
+		ImageView homeSettingIcon = new ImageView("https://img.icons8.com/?size=100&id=xHeTZeKGjXUD&format=png&color=000000");
+		homeSettingIcon.setFitHeight(54);
+		homeSettingIcon.setFitWidth(54);
+		Button homeSettingButton = new Button();
+		homeSettingButton.setGraphic(homeSettingIcon);
 		homeSettingButton.setStyle("-fx-background-color: transparent;");
 		homeSettingButton.setOnAction(event -> {
+			updateDateTime();
 			primaryStage.setScene(homeScene);
 		});
 
-		VBox settingBox = new VBox(30, unitArea, CoordArea, searchButton, currLocation ,locationField, homeSettingButton);
+		HBox container = new HBox(homeSettingButton);
+		container.setAlignment(Pos.BOTTOM_CENTER);
+
+		VBox settingBox = new VBox(30, unitArea, CoordArea, searchButton, currLocation ,locationField);
 		settingBox.setAlignment(Pos.CENTER);
 
-		settingScene = new Scene(settingBox, 374, 810);
+		StackPane settingPane = new StackPane();
+		settingPane.getChildren().addAll(settingWallpaperViewer, settingBox, container);
+
+		settingScene = new Scene(settingPane, 374, 810);
 
 
 		// WEATHER MAIN SCREEN
