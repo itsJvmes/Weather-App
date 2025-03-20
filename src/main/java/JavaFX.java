@@ -360,7 +360,7 @@ public class JavaFX extends Application {
 						"-fx-text-fill: black;"
 		);
 
-		HBox locationArea = new HBox(iconLocation1, mainWeatherLocation, iconLocation2);
+		HBox locationArea = new HBox(iconLocation1, mainWeatherLocation);
 		locationArea.setAlignment(Pos.CENTER);
 
 		mainWeatherDegree = new TextField();
@@ -458,7 +458,12 @@ public class JavaFX extends Application {
 		bottomContainer.setSpacing(70);
 		bottomContainer.setPadding(new Insets(10, 10, 10, 10));
 
-		VBox weatherVBox = new VBox(locationArea, degreeArea, shortDescription, windArea);
+		String currWeather = iconBasedOnShortDesc(forecast.get(0).shortForecast);
+		ImageView currWeatherIcon = new ImageView(currWeather);
+		currWeatherIcon.setFitHeight(81);
+		currWeatherIcon.setFitWidth(81);
+
+		VBox weatherVBox = new VBox(locationArea, currWeatherIcon, degreeArea, shortDescription, windArea);
 		weatherVBox.setAlignment(Pos.CENTER);
 		weatherVBox.setSpacing(20);
 
