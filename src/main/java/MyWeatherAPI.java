@@ -12,23 +12,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class MyWeatherAPI extends WeatherAPI {
 
-    // Method to fetch forecast using latitude & longitude
-    public static ArrayList<Period> getForecastByLatLon(String lat, String lon) {
-        GridInfo gridInfo = convertLatLonToGrid(lat, lon);
-        if (gridInfo == null) {
-            System.err.println("Failed to get grid info from lat/lon");
-            return null;
-        }
-
-        System.out.println("Location: " + gridInfo.city + ", " + gridInfo.state);
-        System.out.println("Region: " + gridInfo.region + ", GridX: " + gridInfo.gridX + ", GridY: " + gridInfo.gridY);
-
-        // Call WeatherAPI.getForecast with extracted region, gridX, and gridY
-        return WeatherAPI.getForecast(gridInfo.region, gridInfo.gridX, gridInfo.gridY);
-    }
 
     // Converts latitude & longitude to region, gridX, gridY, city, and state
-    private static GridInfo convertLatLonToGrid(String lat, String lon) {
+    public static GridInfo convertLatLonToGrid(String lat, String lon) {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("https://api.weather.gov/points/" + lat + "," + lon))
                 .build();
@@ -50,7 +36,13 @@ public class MyWeatherAPI extends WeatherAPI {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             JsonNode rootNode = objectMapper.readTree(response.body());
+            if (rootNode.has("status") && rootNode.get("status").asInt() != 200) {
+                return null;
+            }
             JsonNode properties = rootNode.path("properties");
+            if (properties.isMissingNode()) {
+                return null;
+            }
 
             String gridId = properties.path("gridId").asText();
             int gridX = properties.path("gridX").asInt();

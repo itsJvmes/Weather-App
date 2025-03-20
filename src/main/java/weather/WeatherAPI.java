@@ -34,6 +34,9 @@ public class WeatherAPI {
         Root toRet = null;
         try {
             toRet = om.readValue(json, Root.class);
+            if (toRet == null || toRet.properties == null) {
+                return null;
+            }
             ArrayList<Period> p = toRet.properties.periods;
 
         } catch (JsonProcessingException e) {
@@ -42,6 +45,5 @@ public class WeatherAPI {
         return toRet;
     }
 }
-
 
 

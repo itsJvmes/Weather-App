@@ -1,5 +1,9 @@
 import javafx.application.Application;
 
+import java.text.DecimalFormat;
+
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -24,12 +28,19 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class JavaFX extends Application {
+	GridInfo gridInfo;
+	ArrayList<Period> forecast;
+
 	// Home page and main weather page
+	TextField degreeField, lonOption, latOption, locationField, currLocation,mainWeatherLocation, shortDescription,windTitle,windDescription;
+	Boolean unitToC = true;
+	Button settingButton, searchButton, unitField;
 	SimpleDateFormat currDate, currTime;
 	Date now;
-	TextField date,time;
+	TextField date,time, mainWeatherDegree;
 	DropShadow dropShadow = new DropShadow();
-	Scene homeScene, weatherAppScene;
+	Scene homeScene, settingScene, weatherAppScene;
+
 	// Weather in next 4 days page
 	int swapBGcount = 0;
 	String changeBGIcon = "https://img.icons8.com/?size=100&id=102352&format=png&color=000000";
@@ -45,12 +56,16 @@ public class JavaFX extends Application {
 	HBox hDay1, hDay1Night, hDay2, hDay2Night, hDay3, hDay3Night, hInteraction;
 	VBox vDay1, vDay1Night, vDay2, vDay2Night, vDay3, vDay3Night, vPredict;
 	Scene weather3DPage;
+
 	public static void main(String[] args) { launch(args); }
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		primaryStage.setTitle("Weather App");
-		ArrayList<Period> forecast = WeatherAPI.getForecast("LOT",77,70);
+		gridInfo = MyWeatherAPI.convertLatLonToGrid("41.8832","-87.6324");
+		//forecast = WeatherAPI.getForecast("LOT",77,70);
+		forecast = WeatherAPI.getForecast(gridInfo.region,gridInfo.gridX, gridInfo.gridY);
+		//System.out.println(gridInfo.city+", "+gridInfo.state+ " at "+gridInfo.gridX+" "+gridInfo.gridY);
 		if (forecast == null){
 			throw new RuntimeException("Forecast did not load");
 		}
@@ -128,18 +143,13 @@ public class JavaFX extends Application {
 		ImageView app2Viewer = new ImageView(app2Icon);
 		app2Viewer.setFitHeight(81);
 		app2Viewer.setFitWidth(81);
-		Button app2Button = new Button();
-		app2Button.setGraphic(app1Viewer);
-		app2Button.setStyle("-fx-background-color: transparent;");
+		settingButton = new Button();
+		settingButton.setGraphic(app2Viewer);
+		settingButton.setStyle("-fx-background-color: transparent;");
+		settingButton.setOnAction(event -> {
+			primaryStage.setScene(settingScene); // FIX
+		});
 
-		FileInputStream app3FileName = new FileInputStream("Background/icons8-developer-100.png");
-		Image app3Icon = new Image(app3FileName);
-		ImageView app3Viewer = new ImageView(app3Icon);
-		app3Viewer.setFitHeight(81);
-		app3Viewer.setFitWidth(81);
-		Button app3Button = new Button();
-		app3Button.setGraphic(app1Viewer);
-		app3Button.setStyle("-fx-background-color: transparent;");
 
 		// Create date, time, and icons layout
 		HBox iconArea = new HBox(junimo1, junimo2);
@@ -160,7 +170,7 @@ public class JavaFX extends Application {
 		BorderPane.setMargin(topContainer, new Insets(10, 10, 0, 0));
 
 		// Create app icons layout
-		HBox appArea = new HBox(app1Button, app2Viewer, app3Viewer);
+		HBox appArea = new HBox(app1Button, settingButton);
 		appArea.setAlignment(Pos.CENTER);
 		appArea.setSpacing(60);
 		appArea.setPrefSize(375, 100);
@@ -176,6 +186,144 @@ public class JavaFX extends Application {
 		// Stack everything together
 		StackPane fullscreen = new StackPane();
 		fullscreen.getChildren().addAll(wallpaperView, borderPane);
+
+		// Setting Screen
+
+		FileInputStream settingFileName = new FileInputStream("Background/full-moon-in-stardew-valley-j9tc9l0xk0xm76r0.jpg");
+		Image settingWallpaper = new Image(settingFileName);
+		ImageView settingWallpaperViewer = new ImageView(settingWallpaper);
+		settingWallpaperViewer.setX(0);
+		settingWallpaperViewer.setY(0);
+		settingWallpaperViewer.setFitWidth(374);
+		settingWallpaperViewer.setFitHeight(810);
+
+		unitField = new Button("Change Unit ");
+		//unitField.setStyle("-fx-background-color: transparent;");
+		unitField.setOnAction(event -> {
+			if (degreeField.getText().equals("Fahrenheit")) {
+				degreeField.setText("Celsius");
+				changeUnit();
+			} else {
+				degreeField.setText("Fahrenheit");
+				changeUnit();
+			}
+		});
+
+		degreeField = new TextField();
+		degreeField.setText("Fahrenheit");
+		degreeField.setAlignment(Pos.CENTER);
+		degreeField.setEditable(false);
+
+		HBox unitArea = new HBox(30, unitField, degreeField);
+		unitArea.setAlignment(Pos.CENTER);
+
+		lonOption = new TextField();
+		lonOption.setPromptText("Enter Longitude");
+		lonOption.setAlignment(Pos.CENTER);
+
+		latOption = new TextField();
+		latOption.setPromptText("Enter Latitude");
+		latOption.setAlignment(Pos.CENTER);
+
+		HBox CoordArea = new HBox(30, latOption, lonOption);
+		CoordArea.setAlignment(Pos.CENTER);
+
+		searchButton= new Button("Search");
+		searchButton.setAlignment(Pos.CENTER);
+		searchButton.setOnAction(event -> {
+			searchButton.setText("Searching...");
+			searchButton.setDisable(true);
+			locationField.setText(""); // Clear previous result
+
+			Task<Void> task = new Task<>() {
+				@Override
+				protected Void call() {
+					try {
+						double lat = Double.parseDouble(latOption.getText());
+						double lon = Math.abs(Double.parseDouble(lonOption.getText())) * -1;
+
+						latOption.setText(formatDecimal(lat));
+						lonOption.setText(formatDecimal(lon));
+
+						// Print debug info
+						System.out.println("Fetching grid info for: " + lat + ", " + lon);
+
+						gridInfo = MyWeatherAPI.convertLatLonToGrid(latOption.getText(), lonOption.getText());
+
+						Platform.runLater(() -> {
+							if (gridInfo == null) {
+								System.err.println("Grid info is null. API may have failed.");
+								locationField.setText("Location not found");
+							} else {
+								System.out.println("Grid info found: " + gridInfo.region);
+								forecast = WeatherAPI.getForecast(gridInfo.region, gridInfo.gridX, gridInfo.gridY);
+								if (forecast == null) {
+									locationField.setText("Weather is not available in this location");
+								}
+								else{
+									locationField.setText(gridInfo.city + ", " + gridInfo.state);
+									updateWeatherOnLocation();
+								}
+							}
+							searchButton.setText("Search");
+							searchButton.setDisable(false);
+						});
+					} catch (Exception e) {
+						e.printStackTrace();
+						Platform.runLater(() -> {
+							locationField.setText("Invalid input");
+							searchButton.setText("Search");
+							searchButton.setDisable(false);
+						});
+					}
+					return null;
+				}
+			};
+
+			new Thread(task).start();
+		});
+
+		currLocation = new TextField();
+		currLocation.setEditable(false);
+		currLocation.setText("Current Location: ");
+		currLocation.setAlignment(Pos.CENTER);
+		currLocation.setStyle("-fx-background-color: transparent; -fx-text-fill: white;");
+
+		locationField = new TextField();
+		locationField.setEditable(false);
+		locationField.setText("Chicago, IL");
+		locationField.setAlignment(Pos.CENTER);
+		locationField.setStyle("-fx-background-color: transparent; -fx-text-fill: white;");
+
+		ImageView homeSettingIcon = new ImageView("https://img.icons8.com/?size=100&id=xHeTZeKGjXUD&format=png&color=000000");
+		homeSettingIcon.setFitHeight(54);
+		homeSettingIcon.setFitWidth(54);
+		Button homeSettingButton = new Button();
+		homeSettingButton.setGraphic(homeSettingIcon);
+		homeSettingButton.setStyle("-fx-background-color: transparent;");
+		homeSettingButton.setOnAction(event -> {
+			updateDateTime();
+			primaryStage.setScene(homeScene);
+		});
+
+		HBox container = new HBox(homeSettingButton);
+		container.setAlignment(Pos.BOTTOM_CENTER);
+
+		VBox settingBox = new VBox(30, unitArea, CoordArea, searchButton, currLocation, locationField);
+		settingBox.setAlignment(Pos.CENTER);
+
+		VBox settingLayout = new VBox(settingBox, container);
+		settingLayout.setAlignment(Pos.TOP_CENTER); // Start from top
+
+		VBox.setVgrow(settingBox, Priority.ALWAYS); // Push settingBox to the middle
+		container.setAlignment(Pos.BOTTOM_CENTER); // Keep container at bottom
+
+		StackPane settingPane = new StackPane();
+		settingPane.getChildren().add(settingWallpaperViewer);
+		settingPane.getChildren().add(settingLayout);
+		settingPane.setAlignment(Pos.CENTER);
+
+		settingScene = new Scene(settingPane, 374, 810);
 
 		// WEATHER MAIN SCREEN
 		// Load wallpaper image
@@ -195,15 +343,15 @@ public class JavaFX extends Application {
 		iconLocation2.setFitHeight(30);
 		iconLocation2.setFitWidth(30);
 
-		TextField location = new TextField("Chicago, IL");
-		location.setPrefSize(195, 60);
-		location.setMinSize(195, 60);
-		location.setMaxSize(195, 60);
-		location.setEditable(false);
-		location.setAlignment(Pos.CENTER);
+		mainWeatherLocation = new TextField("Chicago, IL");
+		mainWeatherLocation.setPrefSize(195, 60);
+		mainWeatherLocation.setMinSize(195, 60);
+		mainWeatherLocation.setMaxSize(195, 60);
+		mainWeatherLocation.setEditable(false);
+		mainWeatherLocation.setAlignment(Pos.CENTER);
 
-		location.setEffect(dropShadow);
-		location.setStyle(
+		mainWeatherLocation.setEffect(dropShadow);
+		mainWeatherLocation.setStyle(
 				"-fx-font-size: 24; " +
 						"-fx-text-alignment: center; " +
 						"-fx-background-color: transparent; " +
@@ -212,18 +360,18 @@ public class JavaFX extends Application {
 						"-fx-text-fill: black;"
 		);
 
-		HBox locationArea = new HBox(iconLocation1, location, iconLocation2);
+		HBox locationArea = new HBox(iconLocation1, mainWeatherLocation);
 		locationArea.setAlignment(Pos.CENTER);
 
-		TextField degree = new TextField();
-		degree.setText(forecast.getFirst().temperature + "°" + forecast.getFirst().temperatureUnit);
-		degree.setEffect(dropShadow);
-		degree.setPrefSize(195, 80);
-		degree.setMinSize(195, 80);
-		degree.setMaxSize(195, 80);
-		degree.setEditable(false);
-		degree.setAlignment(Pos.CENTER);
-		degree.setStyle(
+		mainWeatherDegree = new TextField();
+		mainWeatherDegree.setText(forecast.getFirst().temperature + "°" + forecast.getFirst().temperatureUnit);
+		mainWeatherDegree.setEffect(dropShadow);
+		mainWeatherDegree.setPrefSize(195, 80);
+		mainWeatherDegree.setMinSize(195, 80);
+		mainWeatherDegree.setMaxSize(195, 80);
+		mainWeatherDegree.setEditable(false);
+		mainWeatherDegree.setAlignment(Pos.CENTER);
+		mainWeatherDegree.setStyle(
 				"-fx-font-size: 48; " +
 						"-fx-text-alignment: center; " +
 						"-fx-background-color: transparent; " +
@@ -232,10 +380,10 @@ public class JavaFX extends Application {
 						"-fx-text-fill: black;"
 		);
 
-		HBox degreeArea = new HBox(degree);
+		HBox degreeArea = new HBox(mainWeatherDegree);
 		degreeArea.setAlignment(Pos.CENTER);
 
-		TextField shortDescription = new TextField(forecast.getFirst().shortForecast);
+		shortDescription = new TextField(forecast.getFirst().shortForecast);
 		shortDescription.setEffect(dropShadow);
 		shortDescription.setPrefWidth(60);
 		shortDescription.setEditable(false);
@@ -249,7 +397,7 @@ public class JavaFX extends Application {
 						"-fx-text-fill: black;"
 		);
 
-		TextField windTitle = new TextField("Wind Speed: ");
+		windTitle = new TextField("Wind Speed: ");
 		windTitle.setEffect(dropShadow);
 		windTitle.setPrefSize(54,54);
 		windTitle.setAlignment(Pos.CENTER);
@@ -264,7 +412,7 @@ public class JavaFX extends Application {
 						"-fx-font-weight: bold;"
 		);
 
-		TextField windDescription = new TextField(forecast.getFirst().windSpeed);
+		windDescription = new TextField(forecast.getFirst().windSpeed);
 		windDescription.setEffect(dropShadow);
 		windDescription.setPrefSize(54,54);
 		windDescription.setAlignment(Pos.CENTER);
@@ -310,7 +458,12 @@ public class JavaFX extends Application {
 		bottomContainer.setSpacing(70);
 		bottomContainer.setPadding(new Insets(10, 10, 10, 10));
 
-		VBox weatherVBox = new VBox(locationArea, degreeArea, shortDescription, windArea);
+		String currWeather = iconBasedOnShortDesc(forecast.get(0).shortForecast);
+		ImageView currWeatherIcon = new ImageView(currWeather);
+		currWeatherIcon.setFitHeight(81);
+		currWeatherIcon.setFitWidth(81);
+
+		VBox weatherVBox = new VBox(locationArea, currWeatherIcon, degreeArea, shortDescription, windArea);
 		weatherVBox.setAlignment(Pos.CENTER);
 		weatherVBox.setSpacing(20);
 
@@ -409,22 +562,13 @@ public class JavaFX extends Application {
 				windSwapButton.setGraphic(iconView);
 			} else {
 				// Switch back to normal mode
-				tempDay1.setText(forecast.get(1).temperature + "°" + forecast.get(2).temperatureUnit);
+				unitToC=!unitToC;
+				changeUnit();
 				probDay1.setText(forecast.get(1).probabilityOfPrecipitation.value + "%");
-
-				tempDay1Night.setText(forecast.get(2).temperature + "°" + forecast.get(3).temperatureUnit);
 				probDay1Night.setText(forecast.get(2).probabilityOfPrecipitation.value + "%");
-
-				tempDay2.setText(forecast.get(3).temperature + "°" + forecast.get(4).temperatureUnit);
 				probDay2.setText(forecast.get(3).probabilityOfPrecipitation.value + "%");
-
-				tempDay2Night.setText(forecast.get(4).temperature + "°" + forecast.get(5).temperatureUnit);
 				probDay2Night.setText(forecast.get(4).probabilityOfPrecipitation.value + "%");
-
-				tempDay3.setText(forecast.get(5).temperature + "°" + forecast.get(6).temperatureUnit);
 				probDay3.setText(forecast.get(5).probabilityOfPrecipitation.value + "%");
-
-				tempDay3Night.setText(forecast.get(6).temperature + "°" + forecast.get(7).temperatureUnit);
 				probDay3Night.setText(forecast.get(6).probabilityOfPrecipitation.value + "%");
 
 				// Update icons for all fields
@@ -478,15 +622,19 @@ public class JavaFX extends Application {
 		hDay3Night = new HBox(10,day3Night, vDay3Night);
 
 		vPredict = new VBox(10, hDay1, hDay1Night, hDay2, hDay2Night, hDay3, hDay3Night);
+		vPredict.setAlignment(Pos.CENTER);
 		vPredict.setStyle("-fx-alignment: center;");
+
 		hInteraction = new HBox(90, changeBG, home3DButton, windSwapButton);
+		hInteraction.setAlignment(Pos.BOTTOM_CENTER);
 
+		VBox layoutPrediction = new VBox(vPredict, hInteraction);
+		layoutPrediction.setAlignment(Pos.TOP_CENTER);
 
-		VBox layoutPrediction = new VBox(210, vPredict, hInteraction);
-		Group rootPredict = new Group(predictionPageView, layoutPrediction);
+		StackPane layoutPredictionPane = new StackPane();
+		layoutPredictionPane.getChildren().addAll(predictionPageView, layoutPrediction, hInteraction);
 
-		weather3DPage = new Scene(rootPredict, 374, 810);
-
+		weather3DPage = new Scene(layoutPredictionPane, 374, 810);
 // END PREDICT WEATHER IN NEXT 3 DAYS PAGE
 
 		// Create and show scene
@@ -504,6 +652,21 @@ public class JavaFX extends Application {
 		date.setText(currDate.format(now));
 		time.setText(currTime.format(now));
 	}
+	private void updateWeatherOnLocation(){
+		unitToC=!unitToC;
+		changeUnit();
+		probDay1.setText(String.valueOf(forecast.get(1).probabilityOfPrecipitation.value)+"%");
+		probDay1Night.setText(String.valueOf(forecast.get(2).probabilityOfPrecipitation.value)+"%");
+		probDay2.setText(String.valueOf(forecast.get(3).probabilityOfPrecipitation.value)+"%");
+		probDay2Night.setText(String.valueOf(forecast.get(4).probabilityOfPrecipitation.value)+"%");
+		probDay3.setText(String.valueOf(forecast.get(5).probabilityOfPrecipitation.value)+"%");
+		probDay3Night.setText(String.valueOf(forecast.get(6).probabilityOfPrecipitation.value)+"%");
+		mainWeatherLocation.setText(gridInfo.city+", "+ gridInfo.state);
+		shortDescription.setText(forecast.get(0).shortForecast);
+		windDescription.setText(forecast.get(0).windSpeed);
+
+	}
+
 	private String swapBackGround(){
 		String[] links={
 				"Background/Autumn/Home - Autumn dawn.jpg",
@@ -618,6 +781,30 @@ public class JavaFX extends Application {
 		button.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
 		return button;
 	}
+	private double formularToC(int temperatureF){
+		return ((temperatureF - 32) * (5.0 / 9.0));
+	}
+	private void changeUnit() {
+		if (unitToC) {
+			mainWeatherDegree.setText(String.valueOf(Math.round(formularToC(forecast.get(0).temperature)))+"°C");
+			tempDay1.setText(String.valueOf(Math.round(formularToC(forecast.get(1).temperature)))+"°C");
+			tempDay1Night.setText(String.valueOf(Math.round(formularToC(forecast.get(2).temperature)))+"°C");
+			tempDay2.setText(String.valueOf(Math.round(formularToC(forecast.get(3).temperature)))+"°C");
+			tempDay2Night.setText(String.valueOf(Math.round(formularToC(forecast.get(4).temperature)))+"°C");
+			tempDay3.setText(String.valueOf(Math.round(formularToC(forecast.get(5).temperature)))+"°C");
+			tempDay3Night.setText(String.valueOf(Math.round(formularToC(forecast.get(6).temperature)))+"°C");
+		} else {
+			mainWeatherDegree.setText(forecast.getFirst().temperature + "°F");
+			tempDay1.setText(forecast.get(1).temperature + "°F");
+			tempDay1Night.setText(forecast.get(2).temperature + "°F");
+			tempDay2.setText(forecast.get(3).temperature + "°F");
+			tempDay2Night.setText(forecast.get(4).temperature + "°F");
+			tempDay3.setText(forecast.get(5).temperature + "°F");
+			tempDay3Night.setText(forecast.get(6).temperature + "°F");
+
+		}
+		unitToC =!unitToC;
+	}
 
 	private String iconBasedOnShortDesc(String shortDesc) {
 		if (shortDesc.contains("Sunny")) {
@@ -638,4 +825,9 @@ public class JavaFX extends Application {
 			return "https://img.icons8.com/?size=100&id=67538&format=png&color=000000";
 		}
 	}
+	private String formatDecimal(double value) {
+		DecimalFormat df = new DecimalFormat("#.####");
+		return df.format(value);
+	}
+
 }
