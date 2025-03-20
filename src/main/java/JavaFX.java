@@ -68,7 +68,7 @@ public class JavaFX extends Application {
 		}
 
 		// Load wallpaper image
-		FileInputStream wallpaperFileName = new FileInputStream("Background/Wallpaper.png");
+		FileInputStream wallpaperFileName = new FileInputStream("Background/home_wallpaper.jpg");
 		Image wallpaper = new Image(wallpaperFileName);
 		ImageView wallpaperView = new ImageView(wallpaper);
 		wallpaperView.setX(0);
@@ -185,7 +185,7 @@ public class JavaFX extends Application {
 		fullscreen.getChildren().addAll(wallpaperView, borderPane);
 
 		// Setting Screen
-		FileInputStream settingFileName = new FileInputStream("Background/full-moon-in-stardew-valley-j9tc9l0xk0xm76r0.jpg");
+		FileInputStream settingFileName = new FileInputStream("Background/setting_wallpaper.jpg");
 		Image settingWallpaper = new Image(settingFileName);
 		ImageView settingWallpaperViewer = new ImageView(settingWallpaper);
 		settingWallpaperViewer.setX(0);
@@ -311,13 +311,13 @@ public class JavaFX extends Application {
 
 		// WEATHER MAIN SCREEN
 		// Load wallpaper image
-		FileInputStream weatherFileName = new FileInputStream("Background/weather_app_wallpaper.png");
+		FileInputStream weatherFileName = new FileInputStream(mainWeatherBackground());
 		Image weatherWallpaper = new Image(weatherFileName);
 		ImageView weatherWallpaperViewer = new ImageView(weatherWallpaper);
-		wallpaperView.setX(0);
-		wallpaperView.setY(0);
-		wallpaperView.setFitWidth(374);
-		wallpaperView.setFitHeight(810);
+		weatherWallpaperViewer.setX(0);
+		weatherWallpaperViewer.setY(0);
+		weatherWallpaperViewer.setFitWidth(374);
+		weatherWallpaperViewer.setFitHeight(810);
 
 		ImageView iconLocation1 = new ImageView("https://img.icons8.com/?size=100&id=124191&format=png&color=000000");
 		iconLocation1.setFitHeight(25);
@@ -447,7 +447,7 @@ public class JavaFX extends Application {
 		currWeatherIcon.setFitWidth(81);
 
 		VBox weatherVBox = new VBox(locationArea, currWeatherIcon, degreeArea, shortDescription, windArea);
-		weatherVBox.setAlignment(Pos.CENTER);
+		weatherVBox.setAlignment(Pos.TOP_CENTER);
 		weatherVBox.setSpacing(20);
 
 		// Stack everything together
@@ -456,7 +456,6 @@ public class JavaFX extends Application {
 
 		// Create and show scene
 		weatherAppScene = new Scene(weatherApp, 374, 810);
-
 
 		// PREDICT WEATHER IN NEXT 3 DAYS PAGE
 		FileInputStream wallpaperPredictionPage = new FileInputStream("Background/Summer/Home - Summer dawn.jpg");
@@ -649,13 +648,14 @@ public class JavaFX extends Application {
 
 	}
 
+	private String mainWeatherBackground(){
+		if (forecast.get(0).isDaytime){
+			return "Background/Spring/Home - Spring day.jpg";
+		}
+		return "Background/Spring/Home - Spring night.jpg";
+	}
 	private String swapBackGround(){
 		String[] links={
-				"Background/Autumn/Home - Autumn dawn.jpg",
-				"Background/Autumn/Home - Autumn day.jpg",
-				"Background/Autumn/Home - Autumn rain.jpg",
-				"Background/Autumn/Home - Autumn sunset.jpg",
-
 				"Background/Spring/Home - Spring dawn.jpg",
 				"Background/Spring/Home - Spring day.jpg",
 				"Background/Spring/Home - Spring rain.jpg",
@@ -665,6 +665,11 @@ public class JavaFX extends Application {
 				"Background/Summer/Home - Summer day.jpg",
 				"Background/Summer/Home - Summer rain.jpg",
 				"Background/Summer/Home - Summer sunset.jpg",
+
+				"Background/Autumn/Home - Autumn dawn.jpg",
+				"Background/Autumn/Home - Autumn day.jpg",
+				"Background/Autumn/Home - Autumn rain.jpg",
+				"Background/Autumn/Home - Autumn sunset.jpg",
 
 				"Background/Winter/Home - Winter dawn.jpg",
 				"Background/Winter/Home - Winter day.jpg",
@@ -691,7 +696,7 @@ public class JavaFX extends Application {
 
 		return hBox;
 	}
-	// function to create text field with transparent blackground
+	// function to create text field with transparent background
 	private TextField createTextField(String text, String alignment, int fontSize, double width, double height) {
 		TextField textField = new TextField(text);
 		textField.setEditable(false);
