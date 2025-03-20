@@ -194,17 +194,22 @@ public class JavaFX extends Application {
 		settingWallpaperViewer.setFitHeight(810);
 
 		unitField = new Button("Change Unit ");
+		unitField.setPrefWidth(160);
+		unitField.setStyle("-fx-background-color: cornflowerblue; -fx-text-fill: black;");
 		unitField.setOnAction(event -> {
 			if (degreeField.getText().equals("Fahrenheit")) {
+				degreeField.setStyle("-fx-text-fill: black; -fx-background-color: rgb(9, 63, 58);");
 				degreeField.setText("Celsius");
 				changeUnit();
 			} else {
+				degreeField.setStyle("-fx-text-fill: black; -fx-background-color: rgb(0, 100, 33);");
 				degreeField.setText("Fahrenheit");
 				changeUnit();
 			}
 		});
 
 		degreeField = new TextField();
+		degreeField.setStyle("-fx-text-fill: black; -fx-background-color: rgb(0, 100, 33);");
 		degreeField.setText("Fahrenheit");
 		degreeField.setAlignment(Pos.CENTER);
 		degreeField.setEditable(false);
@@ -225,6 +230,7 @@ public class JavaFX extends Application {
 
 		searchButton= new Button("Search");
 		searchButton.setAlignment(Pos.CENTER);
+		searchButton.setStyle("-fx-background-color: cornflowerblue; -fx-text-fill: black;");
 		searchButton.setOnAction(event -> {
 			searchButton.setText("Searching...");
 			searchButton.setDisable(true);
@@ -395,7 +401,7 @@ public class JavaFX extends Application {
 						"-fx-font-weight: bold;"
 		);
 
-		windDescription = new TextField(forecast.getFirst().windSpeed);
+		windDescription = new TextField(forecast.getFirst().windSpeed + " | " + forecast.getFirst().windDirection);
 		windDescription.setEffect(dropShadow);
 		windDescription.setPrefSize(54,54);
 		windDescription.setAlignment(Pos.CENTER);
@@ -673,7 +679,7 @@ public class JavaFX extends Application {
 
 				"Background/Winter/Home - Winter dawn.jpg",
 				"Background/Winter/Home - Winter day.jpg",
-				"Background/Winter/Home - Winter rain.jpg",
+				"Background/Winter/Home - Winter snow.jpg",
 				"Background/Winter/Home - Winter sunset.jpg",
 		};
 		if (swapBGcount == links.length){
@@ -771,7 +777,7 @@ public class JavaFX extends Application {
 		button.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
 		return button;
 	}
-	// formylar to convert F to C
+	// formular to convert F to C
 	private double formularToC(int temperatureF){
 		return ((temperatureF - 32) * (5.0 / 9.0));
 	}
