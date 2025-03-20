@@ -622,15 +622,19 @@ public class JavaFX extends Application {
 		hDay3Night = new HBox(10,day3Night, vDay3Night);
 
 		vPredict = new VBox(10, hDay1, hDay1Night, hDay2, hDay2Night, hDay3, hDay3Night);
+		vPredict.setAlignment(Pos.CENTER);
 		vPredict.setStyle("-fx-alignment: center;");
+
 		hInteraction = new HBox(90, changeBG, home3DButton, windSwapButton);
+		hInteraction.setAlignment(Pos.BOTTOM_CENTER);
 
+		VBox layoutPrediction = new VBox(vPredict, hInteraction);
+		layoutPrediction.setAlignment(Pos.TOP_CENTER);
 
-		VBox layoutPrediction = new VBox(210, vPredict, hInteraction);
-		Group rootPredict = new Group(predictionPageView, layoutPrediction);
+		StackPane layoutPredictionPane = new StackPane();
+		layoutPredictionPane.getChildren().addAll(predictionPageView, layoutPrediction, hInteraction);
 
-		weather3DPage = new Scene(rootPredict, 374, 810);
-
+		weather3DPage = new Scene(layoutPredictionPane, 374, 810);
 // END PREDICT WEATHER IN NEXT 3 DAYS PAGE
 
 		// Create and show scene
