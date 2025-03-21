@@ -316,14 +316,7 @@ public class JavaFX extends Application {
 		settingScene = new Scene(settingPane, 374, 810);
 
 		// WEATHER MAIN SCREEN
-		// Load wallpaper image
-		FileInputStream weatherFileName = new FileInputStream(mainWeatherBackground());
-		Image weatherWallpaper = new Image(weatherFileName);
-		ImageView weatherWallpaperViewer = new ImageView(weatherWallpaper);
-		weatherWallpaperViewer.setX(0);
-		weatherWallpaperViewer.setY(0);
-		weatherWallpaperViewer.setFitWidth(374);
-		weatherWallpaperViewer.setFitHeight(810);
+
 
 		ImageView iconLocation1 = new ImageView("https://img.icons8.com/?size=100&id=124191&format=png&color=000000");
 		iconLocation1.setFitHeight(25);
@@ -417,6 +410,15 @@ public class JavaFX extends Application {
 
 		VBox windArea = new VBox(windTitle, windDescription);
 		windArea.setAlignment(Pos.CENTER);
+
+		// Load wallpaper image
+		FileInputStream weatherFileName = new FileInputStream(mainWeatherBackground());
+		Image weatherWallpaper = new Image(weatherFileName);
+		ImageView weatherWallpaperViewer = new ImageView(weatherWallpaper);
+		weatherWallpaperViewer.setX(0);
+		weatherWallpaperViewer.setY(0);
+		weatherWallpaperViewer.setFitWidth(374);
+		weatherWallpaperViewer.setFitHeight(810);
 
 		ImageView predictIcon = new ImageView("https://img.icons8.com/?size=100&id=67571&format=png&color=000000");
 		predictIcon.setFitHeight(54);
@@ -655,10 +657,47 @@ public class JavaFX extends Application {
 	}
 
 	private String mainWeatherBackground(){
+		double sizeShortDes=0;
+		if (shortDescription.getText().length()>40){
+			sizeShortDes = 11.5;
+		}
+		else{
+			sizeShortDes = 18;
+		}
 		if (forecast.get(0).isDaytime){
+			modifyTextField(mainWeatherLocation,"black",24);
+			modifyTextField(mainWeatherDegree,"black",48);
+			modifyTextField(shortDescription,"black",sizeShortDes);
+			modifyTextField(windTitle,"black",18);
+			modifyTextField(windDescription,"black",18);
 			return "Background/Spring/Home - Spring day.jpg";
 		}
+
+		modifyTextField(mainWeatherLocation,"white",24);
+		modifyTextField(mainWeatherDegree,"white",48);
+		modifyTextField(shortDescription,"white",sizeShortDes);
+		modifyTextField(windTitle,"white",18);
+		modifyTextField(windDescription,"white",18);
 		return "Background/Spring/Home - Spring night.jpg";
+	}
+	private void modifyTextField(TextField text , String textColor, double fontSize){
+		if (textColor == "white"){
+			text.setStyle("-fx-font-size: " + fontSize + "px; " +
+					"-fx-text-alignment: center; " +
+					"-fx-background-color: transparent; " +
+					"-fx-control-inner-background: transparent; " +
+					"-fx-border-color: transparent; " +
+					"-fx-text-fill: white;");
+		}
+		else{
+			text.setStyle("-fx-font-size: " + fontSize + "px; " +
+					"-fx-text-alignment: center; " +
+					"-fx-background-color: transparent; " +
+					"-fx-control-inner-background: transparent; " +
+					"-fx-border-color: transparent; " +
+					"-fx-text-fill: black;");
+		}
+
 	}
 	private String swapBackGround(){
 		String[] links={
