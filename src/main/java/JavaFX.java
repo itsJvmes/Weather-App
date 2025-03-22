@@ -17,7 +17,6 @@ import javafx.scene.layout.*;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import weather.Period;
-import weather.WeatherAPI;
 
 
 import java.io.FileInputStream;
@@ -25,6 +24,7 @@ import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Objects;
 
 public class JavaFX extends Application {
 	GridInfo gridInfo;
@@ -90,11 +90,11 @@ public class JavaFX extends Application {
 		date.setAlignment(Pos.CENTER);
 		date.setStyle(
 				"-fx-font-size: 18; " +
-						"-fx-text-alignment: center; " +
-						"-fx-background-color: transparent; " +
-						"-fx-control-inner-background: transparent; " +
-						"-fx-border-color: transparent; " +
-						"-fx-text-fill: black;"
+				"-fx-text-alignment: center; " +
+				"-fx-background-color: transparent; " +
+				"-fx-control-inner-background: transparent; " +
+				"-fx-border-color: transparent; " +
+				"-fx-text-fill: black;"
 		);
 
 		// Create time display
@@ -106,11 +106,11 @@ public class JavaFX extends Application {
 		time.setAlignment(Pos.CENTER);
 		time.setStyle(
 				"-fx-font-size: 18; " +
-						"-fx-text-alignment: center; " +
-						"-fx-background-color: transparent; " +
-						"-fx-control-inner-background: transparent; " +
-						"-fx-border-color: transparent; " +
-						"-fx-text-fill: black;"
+				"-fx-text-alignment: center; " +
+				"-fx-background-color: transparent; " +
+				"-fx-control-inner-background: transparent; " +
+				"-fx-border-color: transparent; " +
+				"-fx-text-fill: black;"
 		);
 
 		// Load Junimo animated icons
@@ -193,7 +193,8 @@ public class JavaFX extends Application {
 		settingWallpaperViewer.setFitWidth(374);
 		settingWallpaperViewer.setFitHeight(810);
 
-		unitField = new Button("Change Unit ");
+		unitField = new Button("Change Unit");
+		unitField.setAlignment(Pos.CENTER);
 		unitField.setPrefWidth(160);
 		unitField.setStyle("-fx-background-color: cornflowerblue; -fx-text-fill: black;");
 		unitField.setOnAction(event -> {
@@ -316,8 +317,6 @@ public class JavaFX extends Application {
 		settingScene = new Scene(settingPane, 374, 810);
 
 		// WEATHER MAIN SCREEN
-
-
 		ImageView iconLocation1 = new ImageView("https://img.icons8.com/?size=100&id=124191&format=png&color=000000");
 		iconLocation1.setFitHeight(25);
 		iconLocation1.setFitWidth(25);
@@ -335,11 +334,11 @@ public class JavaFX extends Application {
 		mainWeatherLocation.setEffect(dropShadow);
 		mainWeatherLocation.setStyle(
 				"-fx-font-size: 24; " +
-						"-fx-text-alignment: center; " +
-						"-fx-background-color: transparent; " +
-						"-fx-control-inner-background: transparent; " +
-						"-fx-border-color: transparent; " +
-						"-fx-text-fill: black;"
+				"-fx-text-alignment: center; " +
+				"-fx-background-color: transparent; " +
+				"-fx-control-inner-background: transparent; " +
+				"-fx-border-color: transparent; " +
+				"-fx-text-fill: black;"
 		);
 
 		HBox locationArea = new HBox(iconLocation1, mainWeatherLocation);
@@ -355,11 +354,11 @@ public class JavaFX extends Application {
 		mainWeatherDegree.setAlignment(Pos.CENTER);
 		mainWeatherDegree.setStyle(
 				"-fx-font-size: 48; " +
-						"-fx-text-alignment: center; " +
-						"-fx-background-color: transparent; " +
-						"-fx-control-inner-background: transparent; " +
-						"-fx-border-color: transparent; " +
-						"-fx-text-fill: black;"
+				"-fx-text-alignment: center; " +
+				"-fx-background-color: transparent; " +
+				"-fx-control-inner-background: transparent; " +
+				"-fx-border-color: transparent; " +
+				"-fx-text-fill: black;"
 		);
 
 		HBox degreeArea = new HBox(mainWeatherDegree);
@@ -372,11 +371,11 @@ public class JavaFX extends Application {
 		shortDescription.setAlignment(Pos.CENTER);
 		shortDescription.setStyle(
 				"-fx-font-size: 18; " +
-						"-fx-text-alignment: center; " +
-						"-fx-background-color: transparent; " +
-						"-fx-control-inner-background: transparent; " +
-						"-fx-border-color: transparent; " +
-						"-fx-text-fill: black;"
+				"-fx-text-alignment: center; " +
+				"-fx-background-color: transparent; " +
+				"-fx-control-inner-background: transparent; " +
+				"-fx-border-color: transparent; " +
+				"-fx-text-fill: black;"
 		);
 
 		windTitle = new TextField("Wind Speed: ");
@@ -386,12 +385,12 @@ public class JavaFX extends Application {
 		windTitle.setEditable(false);
 		windTitle.setStyle(
 				"-fx-font-size: 18; " +
-						"-fx-text-alignment: center; " +
-						"-fx-background-color: transparent; " +
-						"-fx-control-inner-background: transparent; " +
-						"-fx-border-color: transparent; " +
-						"-fx-text-fill: black;" +
-						"-fx-font-weight: bold;"
+				"-fx-text-alignment: center; " +
+				"-fx-background-color: transparent; " +
+				"-fx-control-inner-background: transparent; " +
+				"-fx-border-color: transparent; " +
+				"-fx-text-fill: black;" +
+				"-fx-font-weight: bold;"
 		);
 
 		windDescription = new TextField(forecast.getFirst().windSpeed + " | " + forecast.getFirst().windDirection);
@@ -401,11 +400,11 @@ public class JavaFX extends Application {
 		windDescription.setEditable(false);
 		windDescription.setStyle(
 				"-fx-font-size: 18; " +
-						"-fx-text-alignment: center; " +
-						"-fx-background-color: transparent; " +
-						"-fx-control-inner-background: transparent; " +
-						"-fx-border-color: transparent; " +
-						"-fx-text-fill: black;"
+				"-fx-text-alignment: center; " +
+				"-fx-background-color: transparent; " +
+				"-fx-control-inner-background: transparent; " +
+				"-fx-border-color: transparent; " +
+				"-fx-text-fill: black;"
 		);
 
 		VBox windArea = new VBox(windTitle, windDescription);
@@ -656,51 +655,60 @@ public class JavaFX extends Application {
 
 	}
 
-	private String mainWeatherBackground(){
-		double sizeShortDes=0;
-		if (shortDescription.getText().length()>40){
+	private String mainWeatherBackground() {
+		double sizeShortDes = 0;
+
+		// Adjust font size based on the length of the short description
+		if (shortDescription.getText().length() > 40) {
 			sizeShortDes = 11.5;
-		}
-		else{
+		} else {
 			sizeShortDes = 18;
 		}
-		if (forecast.get(0).isDaytime){
-			modifyTextField(mainWeatherLocation,"black",24);
-			modifyTextField(mainWeatherDegree,"black",48);
-			modifyTextField(shortDescription,"black",sizeShortDes);
-			modifyTextField(windTitle,"black",18);
-			modifyTextField(windDescription,"black",18);
-			return "Background/Spring/Home - Spring day.jpg";
-		}
 
-		modifyTextField(mainWeatherLocation,"white",24);
-		modifyTextField(mainWeatherDegree,"white",48);
-		modifyTextField(shortDescription,"white",sizeShortDes);
-		modifyTextField(windTitle,"white",18);
-		modifyTextField(windDescription,"white",18);
-		return "Background/Spring/Home - Spring night.jpg";
+		// Check if it's daytime to set text color and background accordingly
+		if (forecast.get(0).isDaytime) {
+			modifyTextField(mainWeatherLocation, "black", 24);
+			modifyTextField(mainWeatherDegree, "black", 48);
+			modifyTextField(shortDescription, "black", sizeShortDes);
+			modifyTextField(windTitle, "black", 18);
+			modifyTextField(windDescription, "black", 18);
+			return "Background/Spring/Home - Spring day.jpg"; // Return daytime background
+		} else {
+			modifyTextField(mainWeatherLocation, "white", 24);
+			modifyTextField(mainWeatherDegree, "white", 48);
+			modifyTextField(shortDescription, "white", sizeShortDes);
+			modifyTextField(windTitle, "white", 18);
+			modifyTextField(windDescription, "white", 18);
+			return "Background/Spring/Home - Spring night.jpg"; // Return nighttime background
+		}
 	}
-	private void modifyTextField(TextField text , String textColor, double fontSize){
-		if (textColor == "white"){
-			text.setStyle("-fx-font-size: " + fontSize + "px; " +
-					"-fx-text-alignment: center; " +
-					"-fx-background-color: transparent; " +
-					"-fx-control-inner-background: transparent; " +
-					"-fx-border-color: transparent; " +
-					"-fx-text-fill: white;");
-		}
-		else{
-			text.setStyle("-fx-font-size: " + fontSize + "px; " +
-					"-fx-text-alignment: center; " +
-					"-fx-background-color: transparent; " +
-					"-fx-control-inner-background: transparent; " +
-					"-fx-border-color: transparent; " +
-					"-fx-text-fill: black;");
-		}
 
+	// Set text field styles based on the specified text color
+	private void modifyTextField(TextField text, String textColor, double fontSize) {
+		if (Objects.equals(textColor, "white")) {
+			text.setStyle(
+				"-fx-font-size: " + fontSize + "px; " +
+				"-fx-text-alignment: center; " +
+				"-fx-background-color: transparent; " +
+				"-fx-control-inner-background: transparent; " +
+				"-fx-border-color: transparent; " +
+				"-fx-text-fill: white;" // Set text color to white
+			);
+		} else {
+			text.setStyle(
+				"-fx-font-size: " + fontSize + "px; " +
+				"-fx-text-alignment: center; " +
+				"-fx-background-color: transparent; " +
+				"-fx-control-inner-background: transparent; " +
+				"-fx-border-color: transparent; " +
+				"-fx-text-fill: black;" // Set text color to black
+			);
+		}
 	}
+
+	// Function to swap the background in 3-day forecast scene
 	private String swapBackGround(){
-		String[] links={
+		String[] links= {
 				"Background/Spring/Home - Spring dawn.jpg",
 				"Background/Spring/Home - Spring day.jpg",
 				"Background/Spring/Home - Spring rain.jpg",
@@ -721,6 +729,7 @@ public class JavaFX extends Application {
 				"Background/Winter/Home - Winter snow.jpg",
 				"Background/Winter/Home - Winter sunset.jpg",
 		};
+
 		if (swapBGcount == links.length){
 			swapBGcount = 0;
 		}
@@ -729,7 +738,7 @@ public class JavaFX extends Application {
 		}
 		return links[swapBGcount];
 	}
-	// this function set the icon next to the text field in 3 days weather prediction
+	// Function set the icon next to the text field in 3 days weather prediction
 	private HBox createTextFieldWithIcon(TextField probDay, String link) {
 		// Load the icon
 		ImageView Icon = new ImageView(new Image(link));
@@ -741,7 +750,8 @@ public class JavaFX extends Application {
 
 		return hBox;
 	}
-	// function to create text field with transparent background
+
+	// Function to create text field with transparent background
 	private TextField createTextField(String text, String alignment, int fontSize, double width, double height) {
 		TextField textField = new TextField(text);
 		textField.setEditable(false);
@@ -769,7 +779,8 @@ public class JavaFX extends Application {
 		textField.setEffect(dropShadow);
 		return textField;
 	}
-	// create text field with blurred background
+
+	// Create text field with blurred background
 	private StackPane createBlurredTextField(String text,String alignment, int fontSize, double width, double height) {
 		Region blurredBackground = new Region();
 		blurredBackground.setPrefSize(width, height);
@@ -816,20 +827,22 @@ public class JavaFX extends Application {
 		button.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
 		return button;
 	}
-	// formular to convert F to C
-	private double formularToC(int temperatureF){
+
+	// Formula to convert F to C
+	private double formulaToC(int temperatureF){
 		return ((temperatureF - 32) * (5.0 / 9.0));
 	}
+
 	// Update the temperature unit base on the user choice
 	private void changeUnit() {
 		if (unitToC) {
-			mainWeatherDegree.setText(String.valueOf(Math.round(formularToC(forecast.get(0).temperature)))+"°C");
-			tempDay1.setText(String.valueOf(Math.round(formularToC(forecast.get(1).temperature)))+"°C");
-			tempDay1Night.setText(String.valueOf(Math.round(formularToC(forecast.get(2).temperature)))+"°C");
-			tempDay2.setText(String.valueOf(Math.round(formularToC(forecast.get(3).temperature)))+"°C");
-			tempDay2Night.setText(String.valueOf(Math.round(formularToC(forecast.get(4).temperature)))+"°C");
-			tempDay3.setText(String.valueOf(Math.round(formularToC(forecast.get(5).temperature)))+"°C");
-			tempDay3Night.setText(String.valueOf(Math.round(formularToC(forecast.get(6).temperature)))+"°C");
+			mainWeatherDegree.setText(String.valueOf(Math.round(formulaToC(forecast.get(0).temperature)))+"°C");
+			tempDay1.setText(String.valueOf(Math.round(formulaToC(forecast.get(1).temperature)))+"°C");
+			tempDay1Night.setText(String.valueOf(Math.round(formulaToC(forecast.get(2).temperature)))+"°C");
+			tempDay2.setText(String.valueOf(Math.round(formulaToC(forecast.get(3).temperature)))+"°C");
+			tempDay2Night.setText(String.valueOf(Math.round(formulaToC(forecast.get(4).temperature)))+"°C");
+			tempDay3.setText(String.valueOf(Math.round(formulaToC(forecast.get(5).temperature)))+"°C");
+			tempDay3Night.setText(String.valueOf(Math.round(formulaToC(forecast.get(6).temperature)))+"°C");
 		} else {
 			mainWeatherDegree.setText(forecast.getFirst().temperature + "°F");
 			tempDay1.setText(forecast.get(1).temperature + "°F");
@@ -841,7 +854,8 @@ public class JavaFX extends Application {
 		}
 		unitToC =!unitToC;
 	}
-	// function take the short description to update the icon base on the weather condition
+
+	// Function take the short description to update the icon base on the weather condition
 	private String iconBasedOnShortDesc(String shortDesc) {
 		if (shortDesc.contains("Sunny")) {
 			return "https://img.icons8.com/?size=100&id=67607&format=png&color=000000";
@@ -861,7 +875,8 @@ public class JavaFX extends Application {
 			return "https://img.icons8.com/?size=100&id=67538&format=png&color=000000";
 		}
 	}
-	// function to change the format input for lat and lon. Only take 4 decimals place and no unneeded 0
+
+	// Function to change the format input for lat and lon. Only take 4 decimals place and no unneeded 0
 	private String formatDecimal(double value) {
 		DecimalFormat df = new DecimalFormat("#.####");
 		return df.format(value);
