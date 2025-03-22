@@ -61,8 +61,7 @@ public class JavaFX extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		primaryStage.setTitle("Weather App");
-		gridInfo = MyWeatherAPI.convertLatLonToGrid("41.8832","-87.6324");
-		forecast = MyWeatherAPI.getForecast(gridInfo.region,gridInfo.gridX, gridInfo.gridY);
+		forecast = MyWeatherAPI.getForecast("LOT", 77, 70);
 		if (forecast == null){
 			throw new RuntimeException("Forecast did not load");
 		}
@@ -328,7 +327,7 @@ public class JavaFX extends Application {
 		mainWeatherLocation = new TextField("Chicago, IL");
 		mainWeatherLocation.setPrefSize(195, 60);
 		mainWeatherLocation.setMinSize(195, 60);
-		mainWeatherLocation.setMaxSize(195, 60);
+		mainWeatherLocation.setMaxSize(300, 60);
 		mainWeatherLocation.setEditable(false);
 		mainWeatherLocation.setAlignment(Pos.CENTER);
 		mainWeatherLocation.setEffect(dropShadow);
