@@ -239,8 +239,12 @@ public class JavaFX extends Application {
 				@Override
 				protected Void call() {
 					try {
-						double lat = Double.parseDouble(latOption.getText());
-						double lon = Math.abs(Double.parseDouble(lonOption.getText())) * -1;
+						System.out.println("Hello");
+						CoordInfo coordinate = GeoCodingAPI.getCoordinates("Houston, Texas");
+//						double lat = Double.parseDouble(latOption.getText());
+//						double lon = Math.abs(Double.parseDouble(lonOption.getText())) * -1;
+                        double lat = Double.parseDouble(coordinate.lat);
+						double lon = Double.parseDouble(coordinate.lon);
 						latOption.setText(formatDecimal(lat));
 						lonOption.setText(formatDecimal(lon));
 						// Print debug info

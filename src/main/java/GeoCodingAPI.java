@@ -10,6 +10,7 @@ public class GeoCodingAPI {
     private static final String API_KEY = "AIzaSyDJ6frOqVDG8RQ4IwdRL-02iuXxMv-XT3E";
 
     public static CoordInfo getCoordinates(String address) {
+        address = address.replace(" ", "%20");
         String url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&key=" + API_KEY;
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
