@@ -240,7 +240,7 @@ public class JavaFX extends Application {
 				protected Void call() {
 					try {
 						System.out.println("Hello");
-						CoordInfo coordinate = GeoCodingAPI.getCoordinates("Houston, Texas");
+						CoordInfo coordinate = GeoCodingAPI.getCoordinates("5636 Tomberg St, Dayton, OH");
 //						double lat = Double.parseDouble(latOption.getText());
 //						double lon = Math.abs(Double.parseDouble(lonOption.getText())) * -1;
                         double lat = Double.parseDouble(coordinate.lat);
