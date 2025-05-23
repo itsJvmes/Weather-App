@@ -1,3 +1,5 @@
+package weather;
+
 public class CoordInfo {
     public String lat;
     public String lon;

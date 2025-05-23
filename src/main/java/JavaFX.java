@@ -16,7 +16,11 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import weather.Period;
+//import weather.CoordInfo;
+//import weather.GeoCodingAPI;
+//import weather.GridInfo;
+//import weather.Period;
+import weather.*;
 
 
 import java.io.FileInputStream;
@@ -31,7 +35,7 @@ public class JavaFX extends Application {
 	ArrayList<Period> forecast;
 
 	// Home page and main weather page
-	TextField degreeField, lonOption, latOption, locationField, currLocation,mainWeatherLocation, shortDescription,windTitle,windDescription;
+	TextField degreeField, lonOption, latOption,newLocation, locationField, currLocation,mainWeatherLocation, shortDescription,windTitle,windDescription;
 	Boolean unitToC = true;
 	Button settingButton, searchButton, unitField;
 	SimpleDateFormat currDate, currTime;
@@ -218,15 +222,17 @@ public class JavaFX extends Application {
 		unitArea.setAlignment(Pos.CENTER);
 
 		lonOption = new TextField();
-		lonOption.setPromptText("Enter Longitude");
-		lonOption.setAlignment(Pos.CENTER);
-
+//		lonOption.setPromptText("Enter Longitude");
+//		lonOption.setAlignment(Pos.CENTER);
+//
 		latOption = new TextField();
-		latOption.setPromptText("Enter Latitude");
-		latOption.setAlignment(Pos.CENTER);
+//		latOption.setPromptText("Enter Latitude");
+//		latOption.setAlignment(Pos.CENTER);
 
-		HBox CoordArea = new HBox(30, latOption, lonOption);
-		CoordArea.setAlignment(Pos.CENTER);
+		newLocation = new TextField();
+
+//		HBox CoordArea = new HBox(30, latOption, lonOption);
+//		CoordArea.setAlignment(Pos.CENTER);
 
 		searchButton= new Button("Search");
 		searchButton.setAlignment(Pos.CENTER);
@@ -239,8 +245,8 @@ public class JavaFX extends Application {
 				@Override
 				protected Void call() {
 					try {
-						System.out.println("Hello");
-						CoordInfo coordinate = GeoCodingAPI.getCoordinates("5636 Tomberg St, Dayton, OH");
+						System.out.println("New location: " + newLocation.getText());
+						CoordInfo coordinate = GeoCodingAPI.getCoordinates(newLocation.getText());
 //						double lat = Double.parseDouble(latOption.getText());
 //						double lon = Math.abs(Double.parseDouble(lonOption.getText())) * -1;
                         double lat = Double.parseDouble(coordinate.lat);
@@ -248,8 +254,9 @@ public class JavaFX extends Application {
 						latOption.setText(formatDecimal(lat));
 						lonOption.setText(formatDecimal(lon));
 						// Print debug info
-						System.out.println("Fetching grid info for: " + lat + ", " + lon);
-						gridInfo = MyWeatherAPI.convertLatLonToGrid(latOption.getText(), lonOption.getText());
+						System.out.println("Fetching grid info for: " + coordinate.lat + ", " + coordinate.lon);
+						//gridInfo = MyWeatherAPI.convertLatLonToGrid(latOption.getText(), lonOption.getText());
+						gridInfo = MyWeatherAPI.convertLatLonToGrid(coordinate.lat, coordinate.lon);
 						Platform.runLater(() -> {
 							if (gridInfo == null) {
 								System.err.println("Grid info is null. API may have failed.");
@@ -262,6 +269,7 @@ public class JavaFX extends Application {
 								}
 								else{
 									locationField.setText(gridInfo.city + ", " + gridInfo.state);
+									newLocation.clear();
 									updateWeatherOnLocation();
 								}
 							}
@@ -307,7 +315,7 @@ public class JavaFX extends Application {
 
 		HBox container = new HBox(homeSettingButton);
 		container.setAlignment(Pos.BOTTOM_CENTER);
-		VBox settingBox = new VBox(30, unitArea, CoordArea, searchButton, currLocation, locationField);
+		VBox settingBox = new VBox(30, unitArea, newLocation, searchButton, currLocation, locationField);
 		settingBox.setAlignment(Pos.CENTER);
 		VBox settingLayout = new VBox(settingBox, container);
 		settingLayout.setAlignment(Pos.TOP_CENTER); // Start from top

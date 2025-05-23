@@ -1,3 +1,5 @@
+package weather;
+
 public class GridInfo {
     public String region;
     public int gridX;
