@@ -9,7 +9,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 public class GeoCodingAPI {
-    private static final String API_KEY = "AIzaSyDJ6frOqVDG8RQ4IwdRL-02iuXxMv-XT3E";
+    private static final String API_KEY = "";
 
     public static CoordInfo getCoordinates(String address) {
         address = address.replace(" ", "%20");
