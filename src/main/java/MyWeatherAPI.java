@@ -1,4 +1,5 @@
 import com.fasterxml.jackson.core.JsonProcessingException;
+import weather.GridInfo;
 import weather.Period;
 import weather.Root;
 import weather.WeatherAPI;
